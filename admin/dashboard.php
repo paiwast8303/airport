@@ -2,6 +2,11 @@
 include 'include/config.php';
 
 session_start();
+if($_SESSION['role']==''){
+    header("Location: index.php");
+    exit();
+}
+
 
 $roles = $_SESSION['role'];
 
@@ -35,7 +40,7 @@ $qda = mysqli_query($db, "SELECT * FROM `admin`")
                 <li onclick="window.location.href='manage.php'">Flights</li>
                 <li onclick="window.location.href='gate_manager.php'">Gate Management</li>
                 <li onclick="window.location.href='admin_manager.php'">Admin Manager</li>
-                <li class="logout">Log out</li>
+                <li onclick="window.location.href='include/logout.php'" class="logout">Log out</li>
             </ul>
         </div>
         <div id="Dashboard">
