@@ -153,7 +153,7 @@ $qrole = mysqli_query($db, "SELECT  `role` FROM `admin`");
                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                  </div>
                                  <div class="modal-body">
-                                   <form id="adminFormedite" method="POST" action="include/update_admin.php">
+                                   <form id="adminFormedite<?php echo $row['id'];?>" method="POST" action="include/update_admin.php">
                               <div class="container-fluid">
                                 <div class="row g-3">
                                    <div class="col-md-6">
@@ -197,7 +197,7 @@ $qrole = mysqli_query($db, "SELECT  `role` FROM `admin`");
                                  </div>
                                  <div class="modal-footer">
                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                   <button name="adds" type="submit" class="btn btn-danger" form="adminFormedite">UPDATE</button>
+                                   <button name="adds" type="submit" class="btn btn-danger" form="adminFormedite<?php echo $row['id'];?>">UPDATE</button>
                                  </div>
                                 </div>
                               </div>
