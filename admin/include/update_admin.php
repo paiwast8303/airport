@@ -14,5 +14,3 @@ if($update_query){
 }else{
     header("Location: ../admin_manager.php?error=Failed to update admin");
 }
-
- ?>
