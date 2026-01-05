@@ -4,31 +4,24 @@ include 'include/config.php';
 if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
-     
-
      $query = "SELECT * FROM `admin` WHERE `Email` = '$email' AND `passwords` = '$password'";
-
      $result = mysqli_query($db, $query);
     $count = mysqli_num_rows($result);
-
-    if ($count == 1  && $row['role'] != 'Staff')
+    $row = mysqli_fetch_assoc($result);
+    if ($count == 1 && $row['statuss'] == 'active')
     {
-        
         session_start();
-        $row = $result->fetch_assoc();
+        
         $_SESSION['name'] = $row['fname']; 
         $_SESSION['role'] = $row['role'];
+        $_SESSION['id'] = $row['id'];
         header("Location: dashboard.php");
         exit();
-      
     }
     else
     {
-         echo "<script>alert('Invalid $count');</script>";
-
+      echo "<script>alert('Invalid');</script>";
     }
-
-    
 }
 
 

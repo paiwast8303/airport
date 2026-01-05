@@ -1,10 +1,45 @@
 <?php 
 include 'include/config.php';
+session_start();
+if($_SESSION['role']==''){
+    header("Location: index.php");
+    exit();
+}
+$roles = $_SESSION['role'];
 
-$qadmin = mysqli_query($db, "SELECT * FROM `admin`");
-$qrole = mysqli_query($db, "SELECT  `role` FROM `admin`");
+$query = "SELECT * FROM `admin` WHERE 1=1";
+
+if(isset($_GET['role']) || isset($_GET['status'])) {
+    $query = "SELECT * FROM `admin` WHERE 1=1";
+    
+    if(!empty($_GET['role'])) {
+        $role = mysqli_real_escape_string($db, $_GET['role']);
+        $query .= " AND `role` = '$role'";
+    }
+    
+    if(!empty($_GET['status'])) {
+        $status = mysqli_real_escape_string($db, $_GET['status']);
+        $query .= " AND `statuss` = '$status'";
+    }
+    
+    $qadmin = mysqli_query($db, $query);
+} else {
+    $qadmin = mysqli_query($db, "SELECT * FROM `admin`");
+}
+$qrole = mysqli_query($db, "SELECT DISTINCT `role` FROM `admin`");
+$qstatus = mysqli_query($db, "SELECT DISTINCT `statuss` FROM `admin`");
+
+$countAdminsQuery = "SELECT COUNT(*) as count FROM `admin`";
+$countAdminsResult = mysqli_query($db, $countAdminsQuery);
+$totalAdmins = mysqli_fetch_assoc($countAdminsResult)['count'];
+
+$countactiveAdminsQuery = "SELECT COUNT(*) as count FROM `admin` WHERE `statuss` = 'active'";
+$countactiveAdminsResult = mysqli_query($db, $countactiveAdminsQuery);
+$totalactiveAdmins = mysqli_fetch_assoc($countactiveAdminsResult)['count'];
 
 
+
+$audit_log_query = mysqli_query($db,"SELECT * FROM `audit_log` ORDER BY `created_at` DESC LIMIT 10" );
 
 
 ?>
@@ -18,6 +53,8 @@ $qrole = mysqli_query($db, "SELECT  `role` FROM `admin`");
    <link rel="stylesheet" href="style/admin_manager.css">
 </head>
 <body>
+
+
   
 <div class="modal fade" id="addsadmins" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
@@ -82,10 +119,17 @@ $qrole = mysqli_query($db, "SELECT  `role` FROM `admin`");
             <h2 style="text-align: center; margin-bottom: 5px;">Admin</h2>
             <hr>
             <ul>
-                <li onclick="window.location.href='dashboard.php'" >Dashboard</li>
+                <li onclick="window.location.href='dashboard.php'">Dashboard</li>
+                <?php if($roles == 'superadmin' || $roles == 'admin' ||  $roles == 'Flight Manger' ): ?>
                 <li onclick="window.location.href='manage.php'">Flights</li>
+                <?php endif; 
+                 if($roles == 'superadmin' || $roles == 'admin' ||  $roles == 'Gate Manger' ): ?>
                 <li onclick="window.location.href='gate_manager.php'">Gate Management</li>
+                <?php endif; 
+                    if($roles == 'superadmin' || $roles == 'admin'): ?>
                 <li class="active">Admin Manager</li>
+                <?php  endif; ?>
+                <li onclick="window.location.href='include/logout.php'" class="logout">Log out</li>
             </ul>
         </div>
         <div id="Dashboard">
@@ -93,7 +137,9 @@ $qrole = mysqli_query($db, "SELECT  `role` FROM `admin`");
                 <div>
                     <h1>Control Panel</h1>
                 </div>
+                <?php if($roles == 'superadmin'): ?>
                 <button type="button" class="btn btn-primary add_f"   data-bs-toggle="modal" data-bs-target="#addsadmins" data-bs-whatever="@mdo">+ New Admin</button>
+                <?php  endif; ?>
             </div>
             <div class="main-content">
             
@@ -105,43 +151,48 @@ $qrole = mysqli_query($db, "SELECT  `role` FROM `admin`");
                 </div>
                 <div id="admins" class="tab-content active">
                     <div class="st">
+                    
                         <div class="st-b">
-                            <h2>0</h2>
+                            <h2><?php echo $totalAdmins; ?></h2>
                             <h4>Total Staff</h4>
                         </div>
+                    
                         <div class="st-b">
-                            <h2>0</h2>
-                            <h4>Total Admin</h4>
-                        </div>
-                        <div class="st-b">
-                            <h2>0</h2>
+                            <h2><?php echo $totalactiveAdmins; ?></h2>
                             <h4>Active Admins</h4>
                         </div>
                         
                     </div>
                     <div>
+
+                    
                         <label>Role</label>
-                        <select>
-                            <option>All Roles</option>
-                            <option>Admin</option>
-                            <option>Flight Manager</option>
-                            <option>Gate Agent</option>
-                            <option>Staff</option>
-                        </select>
-                        <label>Status</label>
-                        <select>
-                            <option>All Status</option>
-                            <option>Active</option>
-                            <option>InActive</option>
-                        </select>
+                        <form method="GET" action="">
+                            <select name="role">
+                                <option value="">All Roles</option>
+                                <?php while($role_row = mysqli_fetch_assoc($qrole)): ?>
+                                    <option value="<?php echo $role_row['role']; ?>"><?php echo ucfirst($role_row['role']); ?></option>
+                                <?php endwhile; ?>
+                            </select>
+                            <label>Status</label>
+                            <select name="status">
+                                <option value="">All Status</option>
+                                <option value="active">Active</option>
+                                <option value="disable">Disable</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary mx-4">Filter</button>
+                        </form>
                         <table style="margin-top: 15px;">
                             <tr>
-                                <th>Name</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
                                 <th>Email</th>
                                 <th>Role</th>
                                 <th>Status</th>
                                 <th>Created</th>
+                                <?php if($roles == 'superadmin'): ?>
                                 <th>Actions</th>
+                                <?php  endif; ?>
                             </tr>
                             <?php while($row = mysqli_fetch_assoc($qadmin)): ?>
 
@@ -203,17 +254,20 @@ $qrole = mysqli_query($db, "SELECT  `role` FROM `admin`");
                               </div>
                             </div>
 
-                                                   <tr>
-                                                      <td><?php echo $row['fname'] ?></td>
-                                                      <td><?php echo $row['lname']; ?></td>
-                                                      <td><?php echo $row['role']; ?></td>
-                                                      <td><?php echo $row['statuss']; ?></td>
-                                                      <td><?php echo $row['created_at']; ?></td>
-                                                      <td>
-                                                      <a href="admin_manager.php?e_id=<?php echo $row['id'];?>" type="button" class="btn btn-warning add_f" data-bs-toggle="modal" data-bs-target="#editeadmins<?php echo $row['id'];?>">Edite</a>
-                                                      </td>
-                                                   </tr>
-                                                   <?php endwhile; ?>
+                               <tr>
+                            <td><?php echo $row['fname'] ?></td>
+                          <td><?php echo $row['lname']; ?></td>
+                        <td><?php echo $row['Email']; ?></td>
+                           <td><?php echo $row['role']; ?></td>
+                        <td><?php echo $row['statuss']; ?></td>
+                         <td><?php echo $row['created_at']; ?></td>
+                         <?php if($roles == 'superadmin'): ?>
+                      <td>
+                    <a href="admin_manager.php?e_id=<?php echo $row['id'];?>" type="button" class="btn btn-warning add_f" data-bs-toggle="modal" data-bs-target="#editeadmins<?php echo $row['id'];?>">Edite</a>
+                         </td>
+                            <?php  endif; ?>
+                           </tr>
+                           <?php endwhile; ?>
                         </table>
                     </div>
                 </div>
@@ -235,31 +289,32 @@ $qrole = mysqli_query($db, "SELECT  `role` FROM `admin`");
                                 <option value="month">This Month</option>
                             </select>
                         </div>
+                          <button type="submit" class="btn btn-primary mx-4">Filter</button>
                     </div>
+                   
 
                     <div id="activitiesContainer">
                         <table style="margin-top: 15px;">
                             <tr>
                                 <th>Admin</th>
                                 <th>Action</th>
+                                <th>Detail</th>
                                 <th>Date</th>
                             </tr>
+                            <?php while($alog = mysqli_fetch_assoc($audit_log_query)): ?>
+                             <tr>
+                                <td><?php 
+                                $admin_id = $alog['admin_id'];
+                                $admin_query = mysqli_query($db, "SELECT fname FROM `admin` WHERE id = '$admin_id'");
+                                $admin_row = mysqli_fetch_assoc($admin_query);
+                                echo $admin_row['fname'];
+                                 ?></td>
+                                <td><?php echo $alog['action_type']; ?></td>
+                                <td><?php echo $alog['detail']; ?></td>
+                                <td><?php echo $alog['created_at']; ?></td>
+                            </tr>
+                            <?php endwhile; ?>
                       
-                            <tr>
-                                <td>Miran</td>
-                                <td>Added new flight AA123</td>
-                                <td>2024-10-01</td>
-                            </tr>
-                            <tr>
-                                <td>Paiwast</td>
-                                <td>Updated gate A1 status to Closed</td>
-                                <td>2024-10-02</td>
-                            </tr>
-                            <tr>
-                                <td>Mashwd</td>
-                                <td>Deleted admin user Sonia</td>
-                                <td>2024-10-03</td>
-                            </tr>
                         
                         </table>
                     </div>

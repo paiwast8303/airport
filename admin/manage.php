@@ -1,5 +1,14 @@
+<?php 
+session_start();
+if($_SESSION['role']=='' || $_SESSION['role']== null || $_SESSION['role']== 'Gate Manger'){
+    header("Location: index.php");
+    exit();
+}
+$roles = $_SESSION['role'];
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -198,11 +207,18 @@
         <div id="sidebar">
             <h2 style="text-align: center; margin-bottom: 5px;">Admin</h2>
             <hr>
-            <ul>
-                <li onclick="window.location.href='dashboard.php'" >Dashboard</li>
-                <li class="active">Flights</li>
+              <ul>
+                <li onclick="window.location.href='dashboard.php'">Dashboard</li>
+                <?php if($roles == 'superadmin' || $roles == 'admin' ||  $roles == 'Flight Manger' ): ?>
+                <li class="active" >Flights</li>
+                <?php endif; 
+                 if($roles == 'superadmin' || $roles == 'admin' ||  $roles == 'Gate Manger' ): ?>
                 <li onclick="window.location.href='gate_manager.php'">Gate Management</li>
+                <?php endif; 
+                    if($roles == 'superadmin' || $roles == 'admin'): ?>
                 <li onclick="window.location.href='admin_manager.php'">Admin Manager</li>
+                <?php  endif; ?>
+                <li onclick="window.location.href='include/logout.php'" class="logout">Log out</li>
             </ul>
         </div>
         <div class="panel">

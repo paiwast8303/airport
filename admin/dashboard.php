@@ -30,9 +30,15 @@ $qda = mysqli_query($db, "SELECT * FROM `admin`")
             <hr>
             <ul>
                 <li class="active">Dashboard</li>
+                <?php if($roles == 'superadmin' || $roles == 'admin' ||  $roles == 'Flight Manger' ): ?>
                 <li onclick="window.location.href='manage.php'">Flights</li>
+                <?php endif; 
+                 if($roles == 'superadmin' || $roles == 'admin' ||  $roles == 'Gate Manger' ): ?>
                 <li onclick="window.location.href='gate_manager.php'">Gate Management</li>
+                <?php endif; 
+                    if($roles == 'superadmin' || $roles == 'admin'): ?>
                 <li onclick="window.location.href='admin_manager.php'">Admin Manager</li>
+                <?php  endif; ?>
                 <li onclick="window.location.href='include/logout.php'" class="logout">Log out</li>
             </ul>
         </div>
@@ -42,7 +48,7 @@ $qda = mysqli_query($db, "SELECT * FROM `admin`")
                     <h1>Dashboard</h1>
                 </div>
                 <div>
-                    <p>Welcome, <strong id="adminName"><?php echo $_SESSION['name']; ?></strong></p>
+                    <p>Welcome, <strong id="adminName"><?php echo $_SESSION['name'].' ('.$_SESSION['role'].')'; ?></strong></p>
                 </div>
             </div>
             <?php 

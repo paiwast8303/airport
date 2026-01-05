@@ -2,6 +2,13 @@
 
 include 'include/config.php';
 
+session_start();
+if($_SESSION['role']==''){
+    header("Location: index.php");
+    exit();
+}
+$roles = $_SESSION['role'];
+
 $qgate = mysqli_query($db, "SELECT `g`.`gate`, `t`.`name` FROM `gate` as `g`
 JOIN `terminal` as `t` on   `t`.`id` = `g`.`terminal_id`");
 
@@ -60,10 +67,17 @@ $total_gates = mysqli_num_rows($qgate);
             <h2 style="text-align: center; margin-bottom: 5px;">Admin</h2>
             <hr>
             <ul>
-                <li onclick="window.location.href='dashboard.php'" >Dashboard</li>
+                <li onclick="window.location.href='dashboard.php'">Dashboard</li>
+                <?php if($roles == 'superadmin' || $roles == 'admin' ||  $roles == 'Flight Manger' ): ?>
                 <li onclick="window.location.href='manage.php'">Flights</li>
-                <li class="active">Gate Management</li>
-                <li onclick="window.location.href='admin_manager.html'">Admin Manager</li>
+                <?php endif; 
+                 if($roles == 'superadmin' || $roles == 'admin' ||  $roles == 'Gate Manger' ): ?>
+                <li class="active" >Gate Management</li>
+                <?php endif; 
+                    if($roles == 'superadmin' || $roles == 'admin'): ?>
+                <li onclick="window.location.href='admin_manager.php'">Admin Manager</li>
+                <?php  endif; ?>
+                <li onclick="window.location.href='include/logout.php'" class="logout">Log out</li>
             </ul>
         </div>
         <div id="Dashboard">
