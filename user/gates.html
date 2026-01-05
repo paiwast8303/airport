@@ -13,16 +13,23 @@
         }
 
         .navbar {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        .navbar-brand, .nav-link {
-            color: white !important;
+        .navbar a {
+            color: rgba(255,255,255,0.9);
+            margin: 0 10px;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s;
         }
 
-        .nav-link.active {
+        .navbar a:hover, .navbar a.active {
             background: rgba(255,255,255,0.2);
-            border-radius: 6px;
+            color: white;
         }
 
         .page-header {
@@ -140,16 +147,17 @@
 <body>
 
 <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg">
-    <div class="container">
-        <a class="navbar-brand" href="index.html">✈️ Airport Info</a>
-        <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="flights.html">Flights</a></li>
-            <li class="nav-item"><a class="nav-link active" href="gates.html">Gates</a></li>
-        </ul>
+    <div class="navbar">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="color: white; font-size: 1.5rem; font-weight: bold;">✈️ Airport Info</div>
+            <div>
+                <a href="index.html">Home</a>
+                <a href="flights.html" >Flights</a>
+                <a href="gates.html" class="active">Gates</a>
+                <a href="help.html">Help</a>
+            </div>
+        </div>
     </div>
-</nav>
 
 <!-- HEADER -->
 <div class="page-header">

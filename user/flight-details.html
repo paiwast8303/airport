@@ -17,39 +17,40 @@
             background: #f5f6fa;
         }
 
-        .navbar {
+        .nav-b {
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             padding: 1rem 0;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        .navbar-brand {
+        .nav-br {
             color: white !important;
             font-size: 1.5rem;
             font-weight: bold;
         }
 
-        .nav-link {
+        .nav-l {
             color: rgba(255,255,255,0.9) !important;
             margin: 0 10px;
             transition: all 0.3s;
             padding: 8px 16px !important;
             border-radius: 5px;
+            text-decoration: none;
         }
 
-        .nav-link:hover, .nav-link.active {
+        .nav-l:hover, .nav-l.active {
             background: rgba(255,255,255,0.2);
             color: white !important;
         }
 
-        .page-header {
+        .page-h {
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
             padding: 40px 0;
             margin-bottom: 30px;
         }
 
-        .flight-header {
+        .fl-h {
             background: white;
             border-radius: 15px;
             padding: 30px;
@@ -57,20 +58,20 @@
             margin-bottom: 30px;
         }
 
-        .flight-number-large {
+        .fl-num-l {
             font-size: 2.5rem;
             font-weight: 700;
             color: #1e3c72;
             margin-bottom: 10px;
         }
 
-        .airline-name {
+        .airl-n {
             font-size: 1.3rem;
             color: #666;
             margin-bottom: 20px;
         }
 
-        .status-badge {
+        .stat-b {
             padding: 10px 25px;
             border-radius: 25px;
             font-weight: 600;
@@ -78,27 +79,27 @@
             display: inline-block;
         }
 
-        .status-badge.on-time {
+        .stat-b.on-time {
             background: #e8f5e9;
             color: #2e7d32;
         }
 
-        .status-badge.delayed {
+        .stat-b.delayed {
             background: #fff3e0;
             color: #f57c00;
         }
 
-        .status-badge.cancelled {
+        .stat-b.cancelled {
             background: #ffebee;
             color: #c62828;
         }
 
-        .status-badge.boarding {
+        .stat-b.boarding {
             background: #e3f2fd;
             color: #1565c0;
         }
 
-        .route-display {
+        .route-d {
             background: white;
             border-radius: 15px;
             padding: 40px;
@@ -106,7 +107,7 @@
             margin-bottom: 30px;
         }
 
-        .route-visual {
+        .route-v {
             display: grid;
             grid-template-columns: 1fr auto 1fr;
             gap: 40px;
@@ -114,35 +115,35 @@
             margin: 30px 0;
         }
 
-        .airport-info {
+        .air-i {
             text-align: center;
         }
 
-        .airport-code {
+        .air-c {
             font-size: 3rem;
             font-weight: 700;
             color: #1e3c72;
             margin-bottom: 10px;
         }
 
-        .airport-name {
+        .air-n {
             font-size: 1.2rem;
             color: #666;
             margin-bottom: 15px;
         }
 
-        .flight-time {
+        .fl-t {
             font-size: 2rem;
             font-weight: 700;
             color: #333;
         }
 
-        .flight-date {
+        .fl-d {
             color: #666;
             margin-top: 5px;
         }
 
-        .route-line-container {
+        .route-l-c {
             position: relative;
             padding: 20px 0;
         }
@@ -159,22 +160,18 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            animation: fly 2s ease-in-out infinite;
         }
 
-        @keyframes fly {
-            0%, 100% { transform: translate(-50%, -50%) translateY(0); }
-            50% { transform: translate(-50%, -50%) translateY(-5px); }
-        }
+        
 
-        .duration {
+        .dur {
             text-align: center;
             color: #666;
             margin-top: 15px;
             font-size: 1.1rem;
         }
 
-        .info-section {
+        .info-s {
             background: white;
             border-radius: 15px;
             padding: 30px;
@@ -182,27 +179,27 @@
             margin-bottom: 30px;
         }
 
-        .info-section h3 {
+        .info-s h3 {
             color: #1e3c72;
             margin-bottom: 25px;
             font-weight: 700;
             font-size: 1.5rem;
         }
 
-        .info-grid {
+        .info-g {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 25px;
         }
 
-        .info-item {
+        .info-it {
             padding: 20px;
             background: #f8f9fa;
             border-radius: 10px;
             border-left: 4px solid #2a5298;
         }
 
-        .info-label {
+        .info-l {
             color: #666;
             font-size: 0.9rem;
             margin-bottom: 8px;
@@ -210,24 +207,24 @@
             letter-spacing: 0.5px;
         }
 
-        .info-value {
+        .info-v {
             font-size: 1.5rem;
             font-weight: 700;
             color: #1e3c72;
         }
 
-        .timeline {
+        .time-l {
             position: relative;
             padding: 20px 0;
         }
 
-        .timeline-item {
+        .time-it {
             display: flex;
             margin-bottom: 30px;
             position: relative;
         }
 
-        .timeline-marker {
+        .time-m {
             width: 40px;
             height: 40px;
             background: #2a5298;
@@ -243,11 +240,11 @@
             z-index: 2;
         }
 
-        .timeline-marker.completed {
+        .time-m.completed {
             background: #2e7d32;
         }
 
-        .timeline-marker.current {
+        .time-m.current {
             background: #1565c0;
             animation: pulse 3s ease-in-out infinite;
         }
@@ -257,21 +254,21 @@
             50% { box-shadow: 0 0 0 10px rgba(21, 101, 192, 0); }
         }
 
-        .timeline-content {
+        .time-c {
             flex: 1;
             padding: 15px 20px;
             background: #f8f9fa;
             border-radius: 10px;
         }
 
-        .timeline-time {
+        .time-t {
             font-weight: 700;
             color: #1e3c72;
             font-size: 1.1rem;
             margin-bottom: 5px;
         }
 
-        .timeline-event {
+        .time-e {
             color: #666;
         }
 
@@ -307,7 +304,7 @@
             color: #333;
         }
 
-        .alert-info-custom {
+        .alert-c {
             background: #e3f2fd;
             border-left: 4px solid #1565c0;
             padding: 15px 20px;
@@ -315,30 +312,30 @@
             margin-bottom: 20px;
         }
 
-        footer {
+        .foot {
             background: #2c3e50;
             color: white;
             padding: 40px 0 20px;
             margin-top: 80px;
         }
 
-        footer h5 {
+        .foot h5 {
             color: white;
             margin-bottom: 20px;
         }
 
-        footer a {
+        .foot a {
             color: rgba(255,255,255,0.8);
             text-decoration: none;
             display: block;
             margin-bottom: 10px;
         }
 
-        footer a:hover {
+        .foot a:hover {
             color: white;
         }
 
-        .footer-bottom {
+        .foot-b {
             border-top: 1px solid rgba(255,255,255,0.1);
             margin-top: 30px;
             padding-top: 20px;
@@ -350,35 +347,35 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg">
+    <nav class="nav-b navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="index.html">✈️ Airport Info</a>
+            <div style="color: white; font-size: 1.5rem; font-weight: bold;">✈️ Airport Info</div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
+                        <a class="nav-l" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="flights.html">Flights</a>
+                        <a class="nav-l active" href="flights.html">Flights</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="gates.html">Gates</a>
+                        <a class="nav-l" href="gates.html">Gates</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="services.html">Services</a>
+                        <a class="nav-l" href="services.html">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="help.html">Help</a>
+                        <a class="nav-l" href="help.html">Help</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="page-header">
+    <div class="page-h">
         <div class="container">
             <h1>Flight Details</h1>
             <p>Complete information about your flight</p>
@@ -386,96 +383,93 @@
     </div>
 
     <div class="container">
-        <div class="flight-header">
+        <div class="fl-h">
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
                 <div>
-                    <div class="flight-number-large">KK123</div>
-                    <div class="airline-name">Kurdistan Airlines</div>
+                    <div class="fl-num-l">KK123</div>
+                    <div class="airl-n">Kurdistan Airlines</div>
                 </div>
                 <div>
-                    <span class="status-badge on-time">✓ On Time</span>
+                    <span class="stat-b on-time">✓ On Time</span>
                 </div>
             </div>
         </div>
 
-        <div class="route-display">
+        <div class="route-d">
             <h3 style="color: #1e3c72; margin-bottom: 30px; font-weight: 700;">Flight Route</h3>
-            <div class="route-visual">
-                <div class="airport-info">
-                    <div class="airport-code">EBL</div>
-                    <div class="airport-name">Erbil International Airport</div>
-                    <div class="flight-time">14:30</div>
-                    <div class="flight-date">December 17, 2025</div>
+            <div class="route-v">
+                <div class="air-i">
+                    <div class="air-c">EBL</div>
+                    <div class="air-n">Erbil International Airport</div>
+                    <div class="fl-t">14:30</div>
+                    <div class="fl-d">December 17, 2025</div>
                 </div>
 
-                <div class="route-line-container">
-                    <div class="route-line">
-                        <div class="plane-icon">✈️</div>
-                    </div>
-                    <div class="duration">
+                <div class="route-l-c">
+                    <div class="dur">
                         <strong>Duration:</strong> 2h 15m<br>
                     </div>
                 </div>
 
-                <div class="airport-info">
-                    <div class="airport-code">IST</div>
-                    <div class="airport-name">Istanbul Airport</div>
-                    <div class="flight-time">16:45</div>
-                    <div class="flight-date">December 17, 2025</div>
+                <div class="air-i">
+                    <div class="air-c">IST</div>
+                    <div class="air-n">Istanbul Airport</div>
+                    <div class="fl-t">16:45</div>
+                    <div class="fl-d">December 17, 2025</div>
                 </div>
             </div>
         </div>
 
-        <div class="info-section">
+        <div class="info-s">
             <h3>📋 Flight Information</h3>
-            <div class="info-grid">
-                <div class="info-item">
-                    <div class="info-label">Gate</div>
-                    <div class="info-value">A1</div>
+            <div class="info-g">
+                <div class="info-it">
+                    <div class="info-l">Gate</div>
+                    <div class="info-v">A1</div>
                 </div>
-                <div class="info-item">
-                    <div class="info-label">Terminal</div>
-                    <div class="info-value">1</div>
+                <div class="info-it">
+                    <div class="info-l">Terminal</div>
+                    <div class="info-v">1</div>
                 </div>
-                <div class="info-item">
-                    <div class="info-label">Boarding Time</div>
-                    <div class="info-value">14:00</div>
+                <div class="info-it">
+                    <div class="info-l">Boarding Time</div>
+                    <div class="info-v">14:00</div>
                 </div>
                 
             </div>
         </div>
 
-        <div class="info-section">
+        <div class="info-s">
             <h3>🕐 Flight Timeline</h3>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-marker completed">✓</div>
-                    <div class="timeline-content">
-                        <div class="timeline-time">13:45</div>
-                        <div class="timeline-event">Gate A1 assigned</div>
+            <div class="time-l">
+                <div class="time-it">
+                    <div class="time-m completed">✓</div>
+                    <div class="time-c">
+                        <div class="time-t">13:45</div>
+                        <div class="time-e">Gate A1 assigned</div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-marker ">⏱️</div>
-                    <div class="timeline-content">
-                        <div class="timeline-time">14:00</div>
-                        <div class="timeline-event"><strong>Boarding starts</strong></div>
+                <div class="time-it">
+                    <div class="time-m ">⏱️</div>
+                    <div class="time-c">
+                        <div class="time-t">14:00</div>
+                        <div class="time-e"><strong>Boarding starts</strong></div>
                     </div>
                 </div>
                 
-                <div class="timeline-item">
-                    <div class="timeline-marker current">✈️</div>
-                    <div class="timeline-content">
-                        <div class="timeline-time">14:30</div>
-                        <div class="timeline-event">Departure from Erbil (EBL)</div>
+                <div class="time-it">
+                    <div class="time-m current">✈️</div>
+                    <div class="time-c">
+                        <div class="time-t">14:30</div>
+                        <div class="time-e">Departure from Erbil (EBL)</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="info-section">
+        <div class="info-s">
             <h3>ℹ️ Important Information</h3>
-            <div class="alert-info-custom mb-3">
+            <div class="alert-c mb-3">
                 <strong>⚠️ Please Note:</strong> Passengers should arrive at the gate at least 30 minutes before departure.
             </div>
             <ul style="color: #666; line-height: 2;">
@@ -488,13 +482,13 @@
         </div>
     </div>
 
-    <footer>
+    <div class="foot">
         <div class="container">
-            <div class="footer-bottom">
+            <div class="foot-b">
                 <p>&copy; 2024 Airport Information System. All rights reserved.</p>
             </div>
         </div>
-    </footer>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>

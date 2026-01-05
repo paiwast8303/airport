@@ -23,38 +23,33 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        .navbar-brand {
-            color: white !important;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .nav-link {
-            color: rgba(255,255,255,0.9) !important;
+        .navbar a {
+            color: rgba(255,255,255,0.9);
             margin: 0 10px;
-            transition: all 0.3s;
-            padding: 8px 16px !important;
+            padding: 8px 16px;
             border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s;
         }
 
-        .nav-link:hover, .nav-link.active {
+        .navbar a:hover, .navbar a.active {
             background: rgba(255,255,255,0.2);
-            color: white !important;
+            color: white;
         }
 
-        .page-header {
+        .hdr {
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
             padding: 40px 0;
             margin-bottom: 30px;
         }
 
-        .page-header h1 {
+        .hdr h1 {
             font-size: 2.5rem;
             font-weight: 700;
         }
 
-        .filter-section {
+        .flt-sec {
             background: white;
             border-radius: 15px;
             padding: 25px;
@@ -62,26 +57,26 @@
             margin-bottom: 30px;
         }
 
-        .filter-section h5 {
+        .flt-sec h5 {
             color: #1e3c72;
             margin-bottom: 20px;
             font-weight: 700;
         }
 
-        .filter-group {
+        .flt-grp {
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
             align-items: center;
         }
 
-        .filter-group label {
+        .flt-grp label {
             font-weight: 600;
             color: #333;
             margin-right: 10px;
         }
 
-        .filter-group select, .filter-group input {
+        .flt-grp select, .flt-grp input {
             padding: 10px 15px;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
@@ -89,19 +84,19 @@
             transition: border 0.3s;
         }
 
-        .filter-group select:focus, .filter-group input:focus {
+        .flt-grp select:focus, .flt-grp input:focus {
             outline: none;
             border-color: #2a5298;
         }
 
-        .flight-tabs {
+        .ft-tabs {
             display: flex;
             gap: 10px;
             margin-bottom: 30px;
             border-bottom: 2px solid #e0e0e0;
         }
 
-        .flight-tab {
+        .ft-tab {
             padding: 15px 40px;
             background: none;
             border: none;
@@ -113,19 +108,19 @@
             font-size: 1.1rem;
         }
 
-        .flight-tab.active {
+        .ft-tab.active {
             color: #2a5298;
             border-bottom-color: #2a5298;
         }
 
-        .flights-container {
+        .ft-cont {
             background: white;
             border-radius: 15px;
             padding: 30px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
 
-        .flight-card {
+        .ft-card {
             border: 2px solid #f0f0f0;
             border-radius: 12px;
             padding: 25px;
@@ -134,13 +129,13 @@
             cursor: pointer;
         }
 
-        .flight-card:hover {
+        .ft-card:hover {
             border-color: #2a5298;
             box-shadow: 0 5px 15px rgba(42,82,152,0.2);
             transform: translateY(-2px);
         }
 
-        .flight-card-header {
+        .ft-hdr {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -149,88 +144,88 @@
             gap: 15px;
         }
 
-        .flight-number-section {
+        .ft-num-sec {
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
-        .flight-number {
+        .ft-num {
             font-size: 1.5rem;
             font-weight: 700;
             color: #1e3c72;
         }
 
-        .airline {
+        .air {
             color: #666;
             font-size: 1rem;
         }
 
-        .status-badge {
+        .stat {
             padding: 8px 20px;
             border-radius: 25px;
             font-weight: 600;
             font-size: 0.9rem;
         }
 
-        .status-badge.on-time {
+        .stat.on-time {
             background: #e8f5e9;
             color: #2e7d32;
         }
 
-        .status-badge.delayed {
+        .stat.delayed {
             background: #fff3e0;
             color: #f57c00;
         }
 
-        .status-badge.cancelled {
+        .stat.cancelled {
             background: #ffebee;
             color: #c62828;
         }
 
-        .status-badge.boarding {
+        .stat.boarding {
             background: #e3f2fd;
             color: #1565c0;
         }
 
-        .flight-card-body {
+        .ft-body {
             display: grid;
             grid-template-columns: 1fr auto 1fr;
             gap: 30px;
             align-items: center;
         }
 
-        .location-info {
+        .loc-info {
             text-align: center;
         }
 
-        .location-code {
+        .loc-code {
             font-size: 2rem;
             font-weight: 700;
             color: #1e3c72;
         }
 
-        .location-name {
+        .loc-name {
             color: #666;
             margin-top: 5px;
         }
 
-        .flight-route {
+        .ft-route {
             text-align: center;
             position: relative;
         }
 
-        .flight-icon {
+        .ft-icon {
             font-size: 2rem;
         }
 
-        .route-line {
+        .rt-line {
             height: 2px;
             background: #ddd;
             margin: 10px 0;
         }
 
-        .flight-card-footer {
+        .ft-ftr {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -241,24 +236,24 @@
             gap: 15px;
         }
 
-        .info-item {
+        .info-itm {
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .info-label {
+        .info-lbl {
             color: #666;
             font-size: 0.9rem;
         }
 
-        .info-value {
+        .info-val {
             font-weight: 700;
             color: #333;
             font-size: 1.1rem;
         }
 
-        .gate-badge {
+        .gate {
             background: #e3f2fd;
             color: #1e3c72;
             padding: 10px 20px;
@@ -267,34 +262,34 @@
             font-size: 1.1rem;
         }
 
-        .time-display {
+        .time {
             font-size: 1.8rem;
             font-weight: 700;
             color: #1e3c72;
         }
 
-        .no-results {
+        .no-res {
             text-align: center;
             padding: 60px 20px;
             color: #666;
         }
 
-        .no-results h3 {
+        .no-res h3 {
             color: #333;
             margin-bottom: 10px;
         }
 
         @media (max-width: 768px) {
-            .flight-card-body {
+            .ft-body {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
 
-            .location-info, .flight-route {
+            .loc-info, .ft-route {
                 text-align: left;
             }
 
-            .flight-card-footer {
+            .ft-ftr {
                 flex-direction: column;
                 align-items: flex-start;
             }
@@ -323,7 +318,7 @@
             color: white;
         }
 
-        .footer-bottom {
+        .ftr-btm {
             border-top: 1px solid rgba(255,255,255,0.1);
             margin-top: 30px;
             padding-top: 20px;
@@ -334,34 +329,20 @@
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">✈️ Airport Info</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="flights.html">Flights</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="gates.html">Gates</a>
-                    </li>
-                    
-                    <li class="nav-item">
-                        <a class="nav-link" href="help.html">Help</a>
-                    </li>
-                </ul>
+    <div class="navbar">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="color: white; font-size: 1.5rem; font-weight: bold;">✈️ Airport Info</div>
+            <div>
+                <a href="index.html">Home</a>
+                <a href="flights.html" class="active">Flights</a>
+                <a href="gates.html">Gates</a>
+                <a href="help.html">Help</a>
             </div>
         </div>
-    </nav>
+    </div>
 
     <!-- Page Header -->
-    <div class="page-header">
+    <div class="hdr">
         <div class="container">
             <h1>Flight Information</h1>
             <p>Real-time flight schedules and status updates</p>
@@ -370,13 +351,13 @@
 
     <div class="container">
         <!-- Filter Section -->
-        <div class="filter-section">
+        <div class="flt-sec">
             <h5>🔍 Search & Filter Flights</h5>
-            <div class="filter-group mb-3">
+            <div class="flt-grp mb-3">
                 <input type="text" id="searchInput" placeholder="Search by flight number, airline, or destination..." style="flex: 1; max-width: 400px;">
                 <button class="btn btn-primary" onclick="filterFlights()">Search</button>
             </div>
-            <div class="filter-group">
+            <div class="flt-grp">
                 <label>Airline:</label>
                 <select id="airlineFilter" onchange="filterFlights()">
                     <option value="">All Airlines</option>
@@ -407,128 +388,128 @@
         </div>
 
         <!-- Flight Tabs -->
-        <div class="flight-tabs">
-            <button class="flight-tab active" onclick="switchTab('departures')">✈️ Departures</button>
-            <button class="flight-tab" onclick="switchTab('arrivals')">🛬 Arrivals</button>
+        <div class="ft-tabs">
+            <button class="ft-tab active" onclick="switchTab('departures')">✈️ Departures</button>
+            <button class="ft-tab" onclick="switchTab('arrivals')">🛬 Arrivals</button>
         </div>
 
         <!-- Departures -->
-        <div id="departures" class="flights-container">
-            <div class="flight-card" onclick="window.location.href='flight-details.html?flight=KK123'">
-                <div class="flight-card-header">
-                    <div class="flight-number-section">
+        <div id="departures" class="ft-cont">
+            <div class="ft-card" onclick="window.location.href='flight-details.html?flight=KK123'">
+                <div class="ft-hdr">
+                    <div class="ft-num-sec">
                         <div>
-                            <div class="flight-number">KK123</div>
-                            <div class="airline">Kurdistan Airlines</div>
+                            <div class="ft-num">KK123</div>
+                            <div class="air">Kurdistan Airlines</div>
                         </div>
                     </div>
-                    <div class="status-badge on-time">On Time</div>
+                    <div class="stat on-time">On Time</div>
                 </div>
-                <div class="flight-card-body">
-                    <div class="location-info">
-                        <div class="location-code">EBL</div>
-                        <div class="location-name">Erbil</div>
-                        <div class="time-display">14:30</div>
+                <div class="ft-body">
+                    <div class="loc-info">
+                        <div class="loc-code">EBL</div>
+                        <div class="loc-name">Erbil</div>
+                        <div class="time">14:30</div>
                     </div>
-                    <div class="flight-route">
-                        <div class="flight-icon">✈️</div>
-                        <div class="route-line"></div>
+                    <div class="ft-route">
+                        <div class="ft-icon">✈️</div>
+                        <div class="rt-line"></div>
                         <small style="color: #666;">2h 15m</small>
                     </div>
-                    <div class="location-info">
-                        <div class="location-code">IST</div>
-                        <div class="location-name">Istanbul</div>
-                        <div class="time-display">16:45</div>
+                    <div class="loc-info">
+                        <div class="loc-code">IST</div>
+                        <div class="loc-name">Istanbul</div>
+                        <div class="time">16:45</div>
                     </div>
                 </div>
-                <div class="flight-card-footer">
-                    <div class="info-item">
-                        <span class="info-label">Gate:</span>
-                        <span class="gate-badge">A1</span>
+                <div class="ft-ftr">
+                    <div class="info-itm">
+                        <span class="info-lbl">Gate:</span>
+                        <span class="gate">A1</span>
                     </div>
-                    <div class="info-item">
-                        <span class="info-label">Terminal:</span>
-                        <span class="info-value">1</span>
+                    <div class="info-itm">
+                        <span class="info-lbl">Terminal:</span>
+                        <span class="info-val">1</span>
                     </div>
                     
                 </div>
             </div>
 
-            <div class="flight-card" onclick="window.location.href='flight-details.html?flight=AA456'">
-                <div class="flight-card-header">
-                    <div class="flight-number-section">
+            <div class="ft-card" onclick="window.location.href='flight-details.html?flight=AA456'">
+                <div class="ft-hdr">
+                    <div class="ft-num-sec">
                         <div>
-                            <div class="flight-number">AA456</div>
-                            <div class="airline">Arbat Airlines</div>
+                            <div class="ft-num">AA456</div>
+                            <div class="air">Arbat Airlines</div>
                         </div>
                     </div>
-                    <div class="status-badge delayed">Delayed 45 min</div>
+                    <div class="stat delayed">Delayed 45 min</div>
                 </div>
-                <div class="flight-card-body">
-                    <div class="location-info">
-                        <div class="location-code">EBL</div>
-                        <div class="location-name">Erbil</div>
-                        <div class="time-display">15:45</div>
+                <div class="ft-body">
+                    <div class="loc-info">
+                        <div class="loc-code">EBL</div>
+                        <div class="loc-name">Erbil</div>
+                        <div class="time">15:45</div>
                     </div>
-                    <div class="flight-route">
-                        <div class="flight-icon">✈️</div>
-                        <div class="route-line"></div>
+                    <div class="ft-route">
+                        <div class="ft-icon">✈️</div>
+                        <div class="rt-line"></div>
                         <small style="color: #666;">1h 30m</small>
                     </div>
-                    <div class="location-info">
-                        <div class="location-code">DXB</div>
-                        <div class="location-name">Dubai</div>
-                        <div class="time-display">17:15</div>
+                    <div class="loc-info">
+                        <div class="loc-code">DXB</div>
+                        <div class="loc-name">Dubai</div>
+                        <div class="time">17:15</div>
                     </div>
                 </div>
-                <div class="flight-card-footer">
-                    <div class="info-item">
-                        <span class="info-label">Gate:</span>
-                        <span class="gate-badge">B2</span>
+                <div class="ft-ftr">
+                    <div class="info-itm">
+                        <span class="info-lbl">Gate:</span>
+                        <span class="gate">B2</span>
                     </div>
-                    <div class="info-item">
-                        <span class="info-label">Terminal:</span>
-                        <span class="info-value">1</span>
+                    <div class="info-itm">
+                        <span class="info-lbl">Terminal:</span>
+                        <span class="info-val">1</span>
                     </div>
                     
                 </div>
             </div>
 
-            <div class="flight-card" onclick="window.location.href='flight-details.html?flight=SS789'">
-                <div class="flight-card-header">
-                    <div class="flight-number-section">
+            <div class="ft-card" onclick="window.location.href='flight-details.html?flight=SS789'">
+                <div class="ft-hdr">
+                    <div class="ft-num-sec">
                         <div>
-                            <div class="flight-number">SS789</div>
-                            <div class="airline">Suli Airlines</div>
+                            <div class="ft-num">SS789</div>
+                            <div class="air">Suli Airlines</div>
                         </div>
                     </div>
-                    <div class="status-badge boarding">Boarding Now</div>
+                    <div class="stat boarding">Boarding Now</div>
                 </div>
-                <div class="flight-card-body">
-                    <div class="location-info">
-                        <div class="location-code">EBL</div>
-                        <div class="location-name">Erbil</div>
-                        <div class="time-display">16:20</div>
+                <div class="ft-body">
+                    <div class="loc-info">
+                        <div class="loc-code">EBL</div>
+                        <div class="loc-name">Erbil</div>
+                        <div class="time">16:20</div>
                     </div>
-                    <div class="flight-route">
-                        <div class="flight-icon">✈️</div>
-                        <div class="route-line"></div>
+                    <div class="ft-route">
+                        <div class="ft-icon">✈️</div>
+                        <div class="rt-line"></div>
                         <small style="color: #666;">55m</small>
                     </div>
-                    <div class="location-info">
-                        <div class="location-code">BGW</div>
-                        <div class="location-name">Baghdad</div>
-                        <div class="time-display">17:15</div>
+                    <div class="loc-info">
+                        <div class="loc-code">BGW</div>
+                        <div class="loc-name">Baghdad</div>
+                        <div class="time">17:15</div>
                     </div>
                 </div>
-                <div class="flight-card-footer">
-                    <div class="info-item">
-                        <span class="info-label">Gate:</span>
-                        <span class="gate-badge">C3</span>
+                <div class="ft-ftr">
+                    <div class="info-itm">
+                        <span class="info-lbl">Gate:</span>
+                        <span class="gate">C3</span>
                     </div>
-                    <div class="info-item">
-                        <span class="info-label">Terminal:</span>
-                        <span class="info-value">2</span>
+                    <div class="info-itm">
+                        <span class="info-lbl">Terminal:</span>
+                        <span class="info-val">2</span>
                     </div>
                     
                 </div>
@@ -536,75 +517,75 @@
         </div>
 
         <!-- Arrivals -->
-        <div id="arrivals" class="flights-container" style="display: none;">
-            <div class="flight-card" onclick="window.location.href='flight-details.html?flight=TK567'">
-                <div class="flight-card-header">
-                    <div class="flight-number-section">
+        <div id="arrivals" class="ft-cont" style="display: none;">
+            <div class="ft-card" onclick="window.location.href='flight-details.html?flight=TK567'">
+                <div class="ft-hdr">
+                    <div class="ft-num-sec">
                         <div>
-                            <div class="flight-number">TK567</div>
-                            <div class="airline">Turkish Airlines</div>
+                            <div class="ft-num">TK567</div>
+                            <div class="air">Turkish Airlines</div>
                         </div>
                     </div>
-                    <div class="status-badge on-time">Landed</div>
+                    <div class="stat on-time">Landed</div>
                 </div>
-                <div class="flight-card-body">
-                    <div class="location-info">
-                        <div class="location-code">IST</div>
-                        <div class="location-name">Istanbul</div>
-                        <div class="time-display">11:30</div>
+                <div class="ft-body">
+                    <div class="loc-info">
+                        <div class="loc-code">IST</div>
+                        <div class="loc-name">Istanbul</div>
+                        <div class="time">11:30</div>
                     </div>
-                    <div class="flight-route">
-                        <div class="flight-icon">🛬</div>
-                        <div class="route-line"></div>
+                    <div class="ft-route">
+                        <div class="ft-icon">🛬</div>
+                        <div class="rt-line"></div>
                         <small style="color: #666;">2h 15m</small>
                     </div>
-                    <div class="location-info">
-                        <div class="location-code">EBL</div>
-                        <div class="location-name">Erbil</div>
-                        <div class="time-display">13:45</div>
+                    <div class="loc-info">
+                        <div class="loc-code">EBL</div>
+                        <div class="loc-name">Erbil</div>
+                        <div class="time">13:45</div>
                     </div>
                 </div>
-                <div class="flight-card-footer">
-                    <div class="info-item">
-                        <span class="info-label">Gate:</span>
-                        <span class="gate-badge">A2</span>
+                <div class="ft-ftr">
+                    <div class="info-itm">
+                        <span class="info-lbl">Gate:</span>
+                        <span class="gate">A2</span>
                     </div>
-                    <div class="info-item">
-                        <span class="info-label">Terminal:</span>
-                        <span class="info-value">1</span>
+                    <div class="info-itm">
+                        <span class="info-lbl">Terminal:</span>
+                        <span class="info-val">1</span>
                     </div>
                     
                 </div>
             </div>
 
-            <div class="flight-card" onclick="window.location.href='flight-details.html?flight=QR234'">
-                <div class="flight-card-header">
-                    <div class="flight-number-section">
+            <div class="ft-card" onclick="window.location.href='flight-details.html?flight=QR234'">
+                <div class="ft-hdr">
+                    <div class="ft-num-sec">
                         <div>
-                            <div class="flight-number">QR234</div>
-                            <div class="airline">Qatar Airways</div>
+                            <div class="ft-num">QR234</div>
+                            <div class="air">Qatar Airways</div>
                         </div>
                     </div>
-                    <div class="status-badge on-time">On Time</div>
+                    <div class="stat on-time">On Time</div>
                 </div>
-                <div class="flight-card-body">
-                    <div class="location-info">
-                        <div class="location-code">DOH</div>
-                        <div class="location-name">Doha</div>
-                        <div class="time-display">11:45</div>
+                <div class="ft-body">
+                    <div class="loc-info">
+                        <div class="loc-code">DOH</div>
+                        <div class="loc-name">Doha</div>
+                        <div class="time">11:45</div>
                     </div>
-                    <div class="flight-route">
-                        <div class="flight-icon">🛬</div>
-                        <div class="route-line"></div>
+                    <div class="ft-route">
+                        <div class="ft-icon">🛬</div>
+                        <div class="rt-line"></div>
                         <small style="color: #666;">2h 30m</small>
                     </div>
-                    <div class="location-info">
-                        <div class="location-code">EBL</div>
-                        <div class="location-name">Erbil</div>
-                        <div class="time-display">14:15</div>
+                    <div class="loc-info">
+                        <div class="loc-code">EBL</div>
+                        <div class="loc-name">Erbil</div>
+                        <div class="time">14:15</div>
                     </div>
                 </div>
-                <div class="flight-card-footer">
+                <div class="ft-ftr">
                     <div class="info-item">
                         <span class="info-label">Gate:</span>
                         <span class="gate-badge">B3</span>
@@ -618,41 +599,14 @@
             </div>
         </div>
     </div>
+    <br />
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5>Quick Links</h5>
-                    <a href="flights.html">Flight Information</a>
-                    <a href="gates.html">Gates & Terminals</a>
-                    <a href="help.html">Help & Contact</a>
-                </div>
-                <div class="col-md-4">
-                    <h5>Services</h5>
-                    <a href="#">Parking</a>
-                    <a href="#">Lost & Found</a>
-                    <a href="#">Special Assistance</a>
-                    <a href="#">Airport Map</a>
-                </div>
-                <div class="col-md-4">
-                    <h5>Contact</h5>
-                    <p>📞 +964 XXX XXX XXXX</p>
-                    <p>✉️ info@airport.com</p>
-                    <p>📍 Airport Address</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Airport Information System. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function switchTab(tab) {
-            document.querySelectorAll('.flight-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.ft-tab').forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
             
             document.getElementById('departures').style.display = 'none';
@@ -661,7 +615,6 @@
         }
 
         function filterFlights() {
-            // This would filter flights based on selected criteria
             console.log('Filtering flights...');
         }
     </script>
