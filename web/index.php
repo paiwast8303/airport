@@ -21,7 +21,7 @@ $now = new DateTime();
 
 </head>
 <body>
-    
+    <h1>Dashboard</h1>
 <div id="bd">
         <div id="sidebar">
             <h2>Airport Admin</h2>
