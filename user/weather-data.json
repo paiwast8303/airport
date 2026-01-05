@@ -1,0 +1,108 @@
+{
+  "location": "International Airport",
+  "lastUpdated": "2024-12-04 14:30:00",
+  "current": {
+    "temp": 23,
+    "condition": "Partly Cloudy",
+    "icon": "⛅",
+    "humidity": 65,
+    "windSpeed": 12,
+    "visibility": 10,
+    "precipitation": 10,
+    "high": 24,
+    "low": 20
+  },
+  "weekly": [
+    {
+      "day": "Today",
+      "date": "Dec 4",
+      "temp": 23,
+      "condition": "Partly Cloudy",
+      "icon": "⛅",
+      "high": 24,
+      "low": 20,
+      "humidity": 65,
+      "windSpeed": 12,
+      "visibility": 10,
+      "precipitation": 10
+    },
+    {
+      "day": "Wed",
+      "date": "Dec 5",
+      "temp": 22,
+      "condition": "Sunny",
+      "icon": "☀️",
+      "high": 23,
+      "low": 19,
+      "humidity": 60,
+      "windSpeed": 10,
+      "visibility": 12,
+      "precipitation": 0
+    },
+    {
+      "day": "Thu",
+      "date": "Dec 6",
+      "temp": 21,
+      "condition": "Partly Cloudy",
+      "icon": "⛅",
+      "high": 22,
+      "low": 18,
+      "humidity": 68,
+      "windSpeed": 14,
+      "visibility": 8,
+      "precipitation": 20
+    },
+    {
+      "day": "Fri",
+      "date": "Dec 7",
+      "temp": 19,
+      "condition": "Light Rain",
+      "icon": "🌦️",
+      "high": 20,
+      "low": 17,
+      "humidity": 75,
+      "windSpeed": 16,
+      "visibility": 6,
+      "precipitation": 60
+    },
+    {
+      "day": "Sat",
+      "date": "Dec 8",
+      "temp": 20,
+      "condition": "Cloudy",
+      "icon": "☁️",
+      "high": 21,
+      "low": 18,
+      "humidity": 70,
+      "windSpeed": 12,
+      "visibility": 7,
+      "precipitation": 30
+    },
+    {
+      "day": "Sun",
+      "date": "Dec 9",
+      "temp": 23,
+      "condition": "Sunny",
+      "icon": "☀️",
+      "high": 24,
+      "low": 20,
+      "humidity": 62,
+      "windSpeed": 8,
+      "visibility": 15,
+      "precipitation": 0
+    },
+    {
+      "day": "Mon",
+      "date": "Dec 10",
+      "temp": 24,
+      "condition": "Clear",
+      "icon": "🌤️",
+      "high": 25,
+      "low": 21,
+      "humidity": 58,
+      "windSpeed": 10,
+      "visibility": 20,
+      "precipitation": 0
+    }
+  ]
+}
