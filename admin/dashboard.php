@@ -18,7 +18,7 @@ $qda = mysqli_query($db, "SELECT * FROM `admin`")
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dashboard</title>
 <link rel="stylesheet" href="style/dashboard.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
@@ -32,7 +32,7 @@ $qda = mysqli_query($db, "SELECT * FROM `admin`")
                 <li class="active">Dashboard</li>
                 <?php if($roles == 'superadmin' || $roles == 'admin' ||  $roles == 'Flight Manger' ): ?>
                 <li onclick="window.location.href='manage.php'">Flights</li>
-                <?php endif; 
+                <?php endif;
                  if($roles == 'superadmin' || $roles == 'admin' ||  $roles == 'Gate Manger' ): ?>
                 <li onclick="window.location.href='gate_manager.php'">Gate Management</li>
                 <?php endif; 
@@ -139,8 +139,127 @@ $qda = mysqli_query($db, "SELECT * FROM `admin`")
                        
                     </table>
                 </div>
+                <?php if ($roles != 'Flight Manger'): ?>
+                <div class="card">
+    <h3>Gate Status Overview</h3>
+    <table>
+        <tr>
+            <th>Gate</th>
+            <th>Terminal</th>
+            <th>Status</th>
+            <th>Current Flight</th>
+        </tr>
+        <tr>
+            <td>A01</td>
+            <td>Terminal 1</td>
+            <td>Available</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>A02</td>
+            <td>Terminal 1</td>
+            <td>close</td>
+            <td>KK123</td>
+        </tr>
+        <tr>
+            <td>B01</td>
+            <td>Terminal 2</td>
+            <td>Available</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>B02</td>
+            <td>Terminal 2</td>
+            <td>Maintenance</td>
+            <td>-</td>
+        </tr>
+    </table>
+</div>
+
+<div class="card">
+    <h3>Gate Assignment Queue</h3>
+    <table>
+        <tr>
+            <th>Flight No</th>
+            <th>Airline</th>
+            <th>Type</th>
+            <th>Assigned Gate</th>
+            <th>Time</th>
+        </tr>
+        <tr>
+            <td>AA456</td>
+            <td>Arbat Airlines</td>
+            <td>Departure</td>
+            <td>C01</td>
+            <td>14:30</td>
+        </tr>
+        <tr>
+            <td>SS789</td>
+            <td>Suli Air Lines</td>
+            <td>Arrival</td>
+            <td>C02</td>
+            <td>15:45</td>
+        </tr>
+        <tr>
+            <td>UA234</td>
+            <td>United Airlines</td>
+            <td>Departure</td>
+            <td>Pending</td>
+            <td>16:15</td>
+        </tr>
+    </table>
+</div>
+<?php endif; ?>
+
+
             </div>
+            <br>
+            <?php if ($roles != 'Gate Manger'): ?>
+            <div class="card">
+    <h3>Scheduled Flights</h3>
+    <table>
+        <tr>
+            <th>Flight No</th>
+            <th>Airline</th>
+            <th>Route</th>
+            <th>Status</th>
+            <th>Boarding Time</th>
+        </tr>
+        <tr>
+            <td>KK123</td>
+            <td>Kurdistan Airlines</td>
+            <td>EBL → BHD</td>
+            <td>On Time</td>
+            <td>13:00</td>
+        </tr>
+        <tr>
+            <td>AA456</td>
+            <td>Arbat Airlines</td>
+            <td>BGW → CAI</td>
+            <td>On Time</td>
+            <td>14:30</td>
+        </tr>
+        <tr>
+            <td>SS789</td>
+            <td>Suli Air Lines</td>
+            <td>DXB → EBL</td>
+            <td>On Time</td>
+            <td>15:45</td>
+        </tr>
+        <tr>
+            <td>UA234</td>
+            <td>United Airlines</td>
+            <td>LHR → BGW</td>
+            <td>On Time</td>
+            <td>16:15</td>
+        </tr>
+    </table>
+</div>
+<?php endif; ?>
+
+ <br>
         </div>
     </div>
+   
 </body>
 </html>
