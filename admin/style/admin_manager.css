@@ -44,6 +44,10 @@
     transform: translateX(5px);
 }
 
+.logout:hover{
+            background-color: red !important;
+        }
+
 #Dashboard{
     margin-left: 275px;
     width: 100%;
