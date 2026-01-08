@@ -38,8 +38,33 @@ $countactiveAdminsResult = mysqli_query($db, $countactiveAdminsQuery);
 $totalactiveAdmins = mysqli_fetch_assoc($countactiveAdminsResult)['count'];
 
 
+$audit_log_query = mysqli_query($db,"SELECT * FROM `audit_log` ORDER BY `created_at` DESC" );
 
-$audit_log_query = mysqli_query($db,"SELECT * FROM `audit_log` ORDER BY `created_at` DESC LIMIT 10" );
+if(isset($_GET['filter_aut'])){
+    $admin_id = mysqli_real_escape_string($db, $_GET['admin_id']);
+    $date_range = mysqli_real_escape_string($db, $_GET['date_range']);
+
+    $audit_log_query = "SELECT * FROM `audit_log` WHERE 1=1 ORDER BY `created_at` DESC";
+
+    if(!empty($admin_id)){
+        $audit_log_query .= " AND `admin_id` = '$admin_id'";
+    }
+
+    if(!empty($date_range)){
+        if($date_range == 'today'){
+            $audit_log_query .= " AND DATE(`created_at`) = CURDATE()";
+        } elseif($date_range == 'week'){
+            $audit_log_query .= " AND YEARWEEK(`created_at`, 1) = YEARWEEK(CURDATE(), 1)";
+        } elseif($date_range == 'month'){
+            $audit_log_query .= " AND MONTH(`created_at`) = MONTH(CURDATE()) AND YEAR(`created_at`) = YEAR(CURDATE())";
+        }
+    }
+
+    $audit_log_query = mysqli_query($db, $audit_log_query);
+}
+
+
+
 
 
 ?>
@@ -272,25 +297,32 @@ $audit_log_query = mysqli_query($db,"SELECT * FROM `audit_log` ORDER BY `created
                     </div>
                 </div>
                 <div id="activities" class="tab-content">
+                    <form method="GET" action="">
                     <div class="filters">
                         <div class="filter-g">
                             <label>Admin:</label>
-                            <select id="adminFilter" >
+                            <select name="admin_id" id="adminFilter" >
                                 <option value="">All Admins</option>
+                                <?php
+                                $adminqueery = mysqli_query($db ,"SELECT * FROM `admin` WHERE `role` = 'superadmin'");
+                                while($adminrow = mysqli_fetch_assoc($adminqueery)): ?>
+                                    <option value="<?php echo $adminrow['id']; ?>"><?php echo $adminrow['fname']; ?></option>
+                                <?php endwhile; ?>
                             </select>
                         </div>
                         
                         <div class="filter-g">
                             <label>Date Range:</label>
-                            <select id="dateRangeFilter">
+                            <select name="date_range" id="dateRangeFilter">
                                 <option value="">All Time</option>
                                 <option value="today">Today</option>
                                 <option value="week">This Week</option>
                                 <option value="month">This Month</option>
                             </select>
                         </div>
-                          <button type="submit" class="btn btn-primary mx-4">Filter</button>
+                          <button name="filter_aut" type="submit" class="btn btn-primary mx-4">Filter</button>
                     </div>
+                    </form>
                    
 
                     <div id="activitiesContainer">
