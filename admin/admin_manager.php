@@ -304,9 +304,9 @@ if(isset($_GET['filter_aut'])){
                             <select name="admin_id" id="adminFilter" >
                                 <option value="">All Admins</option>
                                 <?php
-                                $adminqueery = mysqli_query($db ,"SELECT * FROM `admin` WHERE `role` = 'superadmin'");
+                                $adminqueery = mysqli_query($db ,"SELECT * FROM `admin`");
                                 while($adminrow = mysqli_fetch_assoc($adminqueery)): ?>
-                                    <option value="<?php echo $adminrow['id']; ?>"><?php echo $adminrow['fname']; ?></option>
+                                    <option value="<?php echo $adminrow['id']; ?>"><?php echo $adminrow['fname']. " ". $adminrow['lname']; ?></option>
                                 <?php endwhile; ?>
                             </select>
                         </div>

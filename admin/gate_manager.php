@@ -9,18 +9,32 @@ if($_SESSION['role']==''){
 }
 $roles = $_SESSION['role'];
 
-$qgate = mysqli_query($db, "SELECT `g`.`gate`, `t`.`name` FROM `gate` as `g`
+$qgate = mysqli_query($db, "SELECT `g`.`id`, `g`.`gate`, `t`.`name`, `g`.`status` FROM `gate` as `g`
 JOIN `terminal` as `t` on   `t`.`id` = `g`.`terminal_id`");
-
+$terminal_query = mysqli_query($db, "SELECT * FROM `terminal`");
 $total_gates = mysqli_num_rows($qgate);
 
+if(isset($_POST['filter_button'])){
+    $filter_terminal = $_POST['filter_terminal'];
+    $filter_status = $_POST['filter_status'];
 
+    $query_conditions = [];
 
+    if($filter_terminal != ''){
+        $query_conditions[] = "`t`.`name` = '$filter_terminal'";
+    }
+
+    if($filter_status != ''){
+        $query_conditions[] = "`g`.`status` = '$filter_status'";
+    }
+
+    if(count($query_conditions) > 0){
+        $where_clause = " WHERE " . implode(" AND ", $query_conditions);
+        $qgate = mysqli_query($db, "SELECT `g`.`id`, `g`.`gate`, `t`.`name`, `g`.`status` FROM `gate` as `g`
+        JOIN `terminal` as `t` on   `t`.`id` = `g`.`terminal_id`" . $where_clause);
+    }
+}
 ?>
-
-
-
-
 <!DOCTYPE html>
 <html >
 <head>
@@ -36,28 +50,40 @@ $total_gates = mysqli_num_rows($qgate);
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">ADD GATE</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <form>
+    <div class="modal-body">
+      <form name="addGateForm" id="addGateForm" action="include/gate/add_gate.php" method="post">
   <div class="container-fluid">
     <div class="row g-3">
+      <div class="col-md-6">
+        <label for="gateNo" class="form-label">Gate No:</label>
+        <input name="gate_name" type="text" class="form-control" id="gateNo" placeholder="e.g., A1">
+      </div>
+      <div class="col-md-6">
+        <label for="Terminal" class="form-label">Terminal:</label>
+         <select class="form-control" id="Terminal" name="Terminal">
+            <option selected disabled>Select Terminal</option>
+            <?php while($term = mysqli_fetch_assoc($terminal_query)): ?>
+            <option value="<?php echo $term['id']; ?>"><?php echo $term['name']; ?></option>
+            <?php endwhile; ?>
+        </select>
+      </div>
         <div class="col-md-6">
-            <label for="gateNo" class="form-label">Gate No:</label>
-            <input type="text" class="form-control" id="gateNo" placeholder="e.g., A1">
-        </div>
-        <div class="col-md-6">
-            <label for="Terminal" class="form-label">Terminal:</label>
-            <input type="text" class="form-control" id="Terminal" placeholder="e.g., Terminal 1">
-        </div>
+        <label for="Status" class="form-label">Status:</label>
+          <select class="form-control" id="Status" name="Status">
+            <option value="Available">Available</option>
+            <option value="Closed">Closed</option>
+            </select>
+      </div>
     </div>
   </div>
 </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button form="addGateForm" type="submit" class="btn btn-primary">ADD</button>
       </div>
     </div>
   </div>
@@ -112,18 +138,21 @@ $total_gates = mysqli_num_rows($qgate);
                         </div>
                     </div>
                     <div>
-                        <label>Terminal</label>
-                        <select>
-                            <option>All Terminals</option>
-                            <option>Terminal 1</option>
-                            <option>Terminal 2</option>
-                        </select>
-                        <label>Gate status</label>
-                        <select>
-                            <option>All Status</option>
-                            <option>Available</option>
-                            <option>Close</option>
-                        </select>
+                        <form method="post" action="">
+                            <label>Terminal</label>
+                            <select name="filter_terminal">
+                                <option value="">All Terminals</option>
+                                <option value="Terminal1">Terminal 1</option>
+                                <option value="Terminal2">Terminal 2</option>
+                            </select>
+                            <label>Gate status</label>
+                            <select name="filter_status">
+                                <option value="">All Status</option>
+                                <option value="Available">Available</option>
+                                <option value="Closed">Closed</option>
+                            </select>
+                            <button name="filter_button" type="submit" class="btn btn-primary mx-4">Filter</button>
+                        </form>
                         <table style="margin-top: 15px;">
                             <tr>
                                 <th>Gate No</th>
@@ -132,17 +161,57 @@ $total_gates = mysqli_num_rows($qgate);
                                 <th>Actions</th>
                             </tr>
                             <?php while($row = mysqli_fetch_assoc($qgate)): ?>
+
+                                <div class="modal fade" id="gateupdate-id-<?php echo $row['id'];?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">UPDATE GATE</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form name="updategate-id-<?php echo $row['id'];?>" id="updategate-id-<?php echo $row['id'];?>" action="include/gate/update_gate.php" method="post">
+          <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+  <div class="container-fluid">
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label for="gateNo" class="form-label">Gate No:</label>
+            <input name="gate_name" type="text" class="form-control" id="gateNo" placeholder="e.g., A1" value="<?php echo $row['gate']; ?>">
+        </div>
+        <div class="col-md-6">
+            <label for="Terminal" class="form-label">Terminal:</label>
+              <select name="terminal" class="form-control" id="Terminal">
+               <?php 
+               $terminal_query_update = mysqli_query($db, "SELECT * FROM `terminal`");
+               while($term = mysqli_fetch_assoc($terminal_query_update)): ?>
+               <option value="<?php echo $term['id']; ?>" <?php if ($row['name'] == $term['name']) echo 'selected'; ?>><?php echo $term['name']; ?></option>
+               <?php endwhile; ?>
+                </select>
+        </div>
+            <div class="col-md-6">
+            <label for="Status" class="form-label">Status:</label>
+              <select name="status" class="form-control" id="Status">
+               <option value="Available" <?php if ($row['status'] == 'Available') echo 'selected'; ?>>Available</option>
+                <option value="Closed" <?php if ($row['status'] == 'Closed') echo 'selected'; ?>>Closed</option>
+                </select>
+        </div>
+    </div>
+  </div>
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button form="updategate-id-<?php echo $row['id']?>" type="submit" class="btn btn-primary">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
                             <tr>
-                               
                                 <td><?php echo $row['gate']; ?></td>
                                 <td><?php echo $row['name']; ?></td>
-                                <td>Available</td>
+                                <td><?php echo $row['status']; ?></td>
                                 <td>
-                                    <select>
-                                        <option>Available</option>
-                                        <option>Close</option>
-                                        <option>Maintenance</option>
-                                    </select>
+                                <button type="button" class="btn btn-warning add_f" data-bs-toggle="modal" data-bs-target="#gateupdate-id-<?php echo $row['id'];?>">Edit</button>
                                 </td>
                             </tr>
                             <?php endwhile; ?>

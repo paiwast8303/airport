@@ -8,6 +8,7 @@ $password = clear($_POST['password']);
 $role = clear($_POST['role']);
 $status = clear($_POST['status']);
 
+
 $add_query = mysqli_query($db , "INSERT INTO `admin` (`id`, `fname`, `lname`, `Email`, `passwords`, `role`, `statuss`, `created_at`) VALUES (NULL, '$fname', '$lname', '$Email', '$password', '$role', '$status', current_timestamp());");
 if($add_query){
     session_start();

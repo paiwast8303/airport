@@ -4,6 +4,7 @@ include 'include/config.php';
 if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
+    
      $query = "SELECT * FROM `admin` WHERE `Email` = '$email' AND `passwords` = '$password'";
      $result = mysqli_query($db, $query);
     $count = mysqli_num_rows($result);
