@@ -8,7 +8,10 @@ $password = clear($_POST['password']);
 $role = clear($_POST['role']);
 $status = clear($_POST['status']);
 
-$update_query = mysqli_query($db , "UPDATE `admin` SET `fname` = '$fname', `lname` = '$lname', `Email` = '$Email', `passwords` = '$password', `role` = '$role', `statuss` = '$status' WHERE `admin`.`id` = $id;");
+$password_hash = password_hash($password, PASSWORD_BCRYPT);
+
+
+$update_query = mysqli_query($db , "UPDATE `admin` SET `fname` = '$fname', `lname` = '$lname', `Email` = '$Email', `passwords` = '$password_hash', `role` = '$role', `statuss` = '$status' WHERE `admin`.`id` = $id;");
 if($update_query){
      session_start();
     $admin_name = $_SESSION['name'];

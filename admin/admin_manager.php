@@ -253,7 +253,7 @@ if(isset($_GET['filter_aut'])){
                                         <option value="admin" <?php echo ($row['role'] == 'admin') ? 'selected' : ''; ?>>admin</option>
                                         <option value="Gate Manger" <?php echo ($row['role'] == 'Gate Manger') ? 'selected' : ''; ?>>Gate Manger</option>
                                         <option value="Flight Manger" <?php echo ($row['role'] == 'Flight Manger') ? 'selected' : ''; ?>>Flight Manger</option>
-                                        <option value="Staff" <?php echo ($row['role'] == 'Staff') ? 'selected' : ''; ?>>Staff</option>
+                                       
                                     </select>
                                    </div>
                                    <div class="col-md-6">

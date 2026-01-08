@@ -7,9 +7,9 @@ $Email = clear($_POST['Email']);
 $password = clear($_POST['password']);
 $role = clear($_POST['role']);
 $status = clear($_POST['status']);
+$password_hash = password_hash($password, PASSWORD_BCRYPT);
 
-
-$add_query = mysqli_query($db , "INSERT INTO `admin` (`id`, `fname`, `lname`, `Email`, `passwords`, `role`, `statuss`, `created_at`) VALUES (NULL, '$fname', '$lname', '$Email', '$password', '$role', '$status', current_timestamp());");
+$add_query = mysqli_query($db , "INSERT INTO `admin` (`id`, `fname`, `lname`, `Email`, `passwords`, `role`, `statuss`, `created_at`) VALUES (NULL, '$fname', '$lname', '$Email', '$password_hash', '$role', '$status', current_timestamp());");
 if($add_query){
     session_start();
     $admin_name = $_SESSION['name'];

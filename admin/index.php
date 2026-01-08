@@ -4,12 +4,13 @@ include 'include/config.php';
 if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $password_hash = password_hash($password, PASSWORD_BCRYPT);
     
-     $query = "SELECT * FROM `admin` WHERE `Email` = '$email' AND `passwords` = '$password'";
+     $query = "SELECT * FROM `admin` WHERE `Email` = '$email' ";
      $result = mysqli_query($db, $query);
     $count = mysqli_num_rows($result);
     $row = mysqli_fetch_assoc($result);
-    if ($count == 1 && $row['statuss'] == 'active')
+    if ($count == 1 && $row['statuss'] == 'active' && password_verify($password, $row['passwords']))
     {
         session_start();
         
@@ -19,9 +20,17 @@ if (isset($_POST['submit'])) {
         header("Location: dashboard.php");
         exit();
     }
+    else if ($count == 1 && $row['statuss'] == 'active' && !password_verify($password, $row['passwords']))
+    {
+      echo "<script>alert('password incorrect');</script>";
+    }
+    else if ($count == 1 && $row['statuss'] != 'active')
+    {
+      echo "<script>alert('User is inactive');</script>";
+    }
     else
     {
-      echo "<script>alert('Invalid');</script>";
+      echo "<script>alert('User not found');</script>";
     }
 }
 
