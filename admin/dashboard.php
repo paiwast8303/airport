@@ -9,7 +9,32 @@ if($_SESSION['role']==''){
 
 $roles = $_SESSION['role'];
 
-$qda = mysqli_query($db, "SELECT * FROM `admin`")
+$qda = mysqli_query($db, "SELECT * FROM `admin`");
+
+$flights = mysqli_query($db, "
+    SELECT f.flight_no, f.type, f.statuss, f.dates, f.boarding_time,
+           a.name AS airline_name,
+           g.gate AS gate_name,
+           o.name AS origin_name,
+           d.name AS destination_name
+    FROM flight f
+    JOIN airline a ON f.airline_id = a.id
+    JOIN gate g ON f.gate_id = g.id
+    JOIN airport o ON f.origin_id = o.id
+    JOIN airport d ON f.destination_id = d.id
+    WHERE f.dates >= CURDATE()
+    ORDER BY f.dates, f.boarding_time
+    LIMIT 7
+");
+
+$audit_logs = mysqli_query($db, "
+SELECT a.fname AS admin_id, al.action_type, al.detail, al.created_at 
+FROM audit_log al
+JOIN admin a ON al.admin_id = a.id
+ORDER BY al.created_at DESC
+LIMIT 7
+");
+
 
 ?>
 
@@ -51,35 +76,7 @@ $qda = mysqli_query($db, "SELECT * FROM `admin`")
                     <p>Welcome, <strong id="adminName"><?php echo $_SESSION['name'].' ('.$_SESSION['role'].')'; ?></strong></p>
                 </div>
             </div>
-            <?php 
-            if($roles == 'superadmin' || $roles == 'admin'):
-         
-            ?>
-                        <div class="card">
-                    <h3> Admin list</h3>
-                    <table>
-                        
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Created</th>
-                            </tr>
-                            <?php while($row = mysqli_fetch_assoc($qda)): ?>
-                                  <tr>
-                                <td><?php echo $row['fname']." ". $row['lname']; ?></td>
-                                <td><?php echo $row['Email']; ?></td>
-                                <td><?php echo $row['role']; ?></td>
-                                <td><?php echo $row['created_at']; ?></td>
-                            </tr>
-                        <?php endwhile; ?>
-
-
-         
-                    </table>
-                </div>
-                <?php 
-                endif; ?>
+            
 
              <div class="dashboardd">
                 <div class="card">
@@ -92,21 +89,13 @@ $qda = mysqli_query($db, "SELECT * FROM `admin`")
                                 <th>Status</th>
                             </tr>
                       
-                            <tr>
-                                <td>KK123</td>
-                                <td>Kurdistan Airlines</td>
-                                <td>On Time</td>
+                            <?php while($row = mysqli_fetch_assoc($flights)): ?>
+                                  <tr>
+                                <td><?php echo $row['flight_no']; ?></td>
+                                <td><?php echo $row['airline_name']; ?></td>
+                                <td><?php echo $row['statuss']; ?></td>
                             </tr>
-                            <tr>
-                                <td>AA456</td>
-                                <td>Arbat Airlines</td>
-                                <td>Delayed</td>
-                            </tr>
-                            <tr>
-                                <td>SS789</td>
-                                <td>suli Air Lines</td>
-                                <td>On Time</td>
-                            </tr>
+                        <?php endwhile; ?>
                         
                     </table>
                 </div>
@@ -118,24 +107,18 @@ $qda = mysqli_query($db, "SELECT * FROM `admin`")
                             <tr>
                                 <th>Admin</th>
                                 <th>Action</th>
+                                <th>detail</th>
                                 <th>Date</th>
                             </tr>
                        
-                            <tr>
-                                <td>Miran</td>
-                                <td>Updated flight AA123 status</td>
-                                <td>2024-03-25 14:30</td>
+                            <?php while($row = mysqli_fetch_assoc($audit_logs)): ?>
+                                  <tr>
+                                <td><?php echo $row['admin_id']; ?></td>
+                                <td><?php echo $row['action_type']; ?></td>
+                                <td><?php echo $row['detail']; ?></td>
+                                <td><?php echo $row['created_at']; ?></td>
                             </tr>
-                            <tr>
-                                <td>miran</td>
-                                <td>Added new flight UA789</td>
-                                <td>2024-03-25 11:15</td>
-                            </tr>
-                            <tr>
-                                <td>Mira</td>
-                                <td>deleted flight DL456</td>
-                                <td>2024-03-25 09:45</td>
-                            </tr>
+                        <?php endwhile; ?>
                        
                     </table>
                 </div>
@@ -256,6 +239,36 @@ $qda = mysqli_query($db, "SELECT * FROM `admin`")
     </table>
 </div>
 <?php endif; ?>
+<br>
+<?php 
+            if($roles == 'superadmin' || $roles == 'admin'):
+         
+            ?>
+                        <div class="card">
+                    <h3> Admin list</h3>
+                    <table>
+                        
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Created</th>
+                            </tr>
+                            <?php while($row = mysqli_fetch_assoc($qda)): ?>
+                                  <tr>
+                                <td><?php echo $row['fname']." ". $row['lname']; ?></td>
+                                <td><?php echo $row['Email']; ?></td>
+                                <td><?php echo $row['role']; ?></td>
+                                <td><?php echo $row['created_at']; ?></td>
+                            </tr>
+                        <?php endwhile; ?>
+
+
+         
+                    </table>
+                </div>
+                <?php 
+                endif; ?>
 
  <br>
         </div>

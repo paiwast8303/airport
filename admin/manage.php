@@ -1,10 +1,29 @@
 <?php 
+include('include/config.php');
 session_start();
 if($_SESSION['role']=='' || $_SESSION['role']== null || $_SESSION['role']== 'Gate Manger'){
     header("Location: index.php");
     exit();
 }
 $roles = $_SESSION['role'];
+
+$qgate = mysqli_query($db, "SELECT * FROM `gate`");
+$flights = mysqli_query($db, "
+    SELECT f.flight_no, f.type, f.statuss, f.dates, f.boarding_time,
+           a.name AS airline_name,
+           g.gate AS gate_name,
+           o.name AS origin_name,
+           d.name AS destination_name
+    FROM flight f
+    JOIN airline a ON f.airline_id = a.id
+    JOIN gate g ON f.gate_id = g.id
+    JOIN airport o ON f.origin_id = o.id
+    JOIN airport d ON f.destination_id = d.id
+");
+
+$oairport = mysqli_query($db, "SELECT * FROM `airport`");
+$dairport = mysqli_query($db, "SELECT * FROM `airport`");
+$airlines = mysqli_query($db, "SELECT * FROM `airline`");
 ?>
 
 <!DOCTYPE html>
@@ -144,9 +163,9 @@ $roles = $_SESSION['role'];
         <label for="airline" class="form-label">Airline:</label>
         <select class="form-control" id="airline">
           <option value="">Select Airline</option>
-          <option value="airline1">Airline 1</option>
-          <option value="airline2">Airline 2</option>
-          <option value="airline3">Airline 3</option>
+          <?php while($row = mysqli_fetch_assoc($airlines)): ?>
+          <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
+          <?php endwhile; ?>
         </select>
       </div>
       <div class="col-md-6">
@@ -161,18 +180,28 @@ $roles = $_SESSION['role'];
         <label for="gate" class="form-label">Gate:</label>
         <select class="form-control" id="gate">
           <option value="">Select Gate</option>
-          <option value="A1">Gate A1</option>
-          <option value="B2">Gate B2</option>
-          <option value="C3">Gate C3</option>
+          <?php while($row = mysqli_fetch_assoc($qgate)): ?>
+          <option value="<?php echo $row['id']; ?>"><?php echo $row['gate']; ?></option>
+          <?php endwhile; ?>
         </select>
       </div>
       <div class="col-md-6">
         <label for="origin" class="form-label">Origin:</label>
-        <input type="text" class="form-control" id="origin" placeholder="e.g., JFK">
+        <select class="form-control" id="origin">
+          <option value="">Select Origin</option>
+          <?php while($row = mysqli_fetch_assoc($oairport)): ?>
+          <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
+          <?php endwhile; ?>
+        </select>
       </div>
       <div class="col-md-6">
         <label for="destination" class="form-label">Destination:</label>
-        <input type="text" class="form-control" id="destination" placeholder="e.g., LAX">
+        <select class="form-control" id="destination">
+          <option value="">Select Destination</option>
+          <?php while($row = mysqli_fetch_assoc($dairport)): ?>
+          <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
+          <?php endwhile; ?>
+        </select>
       </div>
       <div class="col-md-6">
         <label for="status" class="form-label">Status:</label>
@@ -185,11 +214,11 @@ $roles = $_SESSION['role'];
       </div>
       <div class="col-md-6">
         <label for="date" class="form-label">Date:</label>
-        <input type="date" class="form-control" id="date">
+        <input type="date" class="form-control" id="date" value="<?php echo date('Y-m-d'); ?>">
       </div>
       <div class="col-md-6">
         <label for="time" class="form-label">Time:</label>
-        <input type="time" class="form-control" id="time">
+        <input type="time" class="form-control" id="time" value="<?php echo date('H:i'); ?>">
       </div>
     </div>
   </div>
@@ -197,12 +226,11 @@ $roles = $_SESSION['role'];
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
+        <button type="button" class="btn btn-primary">Submit</button>
       </div>
     </div>
   </div>
 </div>
-
     <div id="bd">
         <div id="sidebar">
             <h2 style="text-align: center; margin-bottom: 5px;">Admin</h2>
@@ -256,25 +284,25 @@ $roles = $_SESSION['role'];
                         
                         <th>Actions</th>
                     </tr>
-                    <tr>
-                        <td>AA123</td>
-                        <td>Airline 1</td>
-                        <td>Arrival</td>
-                        <td>A1</td>
-                        <td>JFK</td>
-                        <td>LAX</td>
-                        <td>On Time</td>
-                        <td>2024-10-01</td>
-                        <td>14:30</td>
-                        
-                        <td>
-                        <div  style="display: flex; flex-direction: column; gap: 5px;">
-                            <button style="background: none; border: none; color: rgb(8, 164, 255); font-size: 24px;">✎</button>
-                            <button style="background: none; border: none; font-size: 24px;">🗑️</button>
-                        </div>
-                        </td>
-                    </tr>
-                    
+                    <?php while($row = mysqli_fetch_assoc($flights)): ?>
+                      <tr>
+                          <td><?php echo $row['flight_no']; ?></td>
+                          <td><?php echo $row['airline_name']; ?></td> 
+                          <td><?php echo $row['type']; ?></td>
+                          <td><?php echo $row['gate_name']; ?></td> 
+                          <td><?php echo $row['origin_name']; ?></td> 
+                          <td><?php echo $row['destination_name']; ?></td> 
+                          <td><?php echo $row['statuss']; ?></td>
+                          <td><?php echo $row['dates']; ?></td>
+                          <td><?php echo $row['boarding_time']; ?></td>
+                          <td>
+                            <div style="display: flex; flex-direction: column; gap: 5px;">
+                                <button style="background: none; border: none; color: rgb(8, 164, 255); font-size: 24px;">✎</button>
+                                <button style="background: none; border: none; font-size: 24px;">🗑️</button>
+                            </div>
+                          </td>
+                      </tr>
+                    <?php endwhile; ?>
                 </table>
                </form>
             </div>
