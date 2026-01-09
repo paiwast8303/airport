@@ -35,7 +35,35 @@ ORDER BY al.created_at DESC
 LIMIT 7
 ");
 
+$gate_status = mysqli_query($db, "
+    SELECT g.gate,t.name AS terminal_name,g.status,f.flight_no FROM gate g
+    JOIN terminal t 
+        ON g.terminal_id = t.id
+    LEFT JOIN flight f 
+        ON g.id = f.gate_id
+        AND f.dates >= CURDATE()
+    ORDER BY g.gate
+");
 
+$scheduled_flights = mysqli_query($db, "
+    SELECT f.flight_no, a.name AS airline_name, o.name AS origin_name, d.name AS destination_name,
+           f.statuss, f.boarding_time
+    FROM flight f
+    JOIN airline a ON f.airline_id = a.id
+    JOIN airport o ON f.origin_id = o.id
+    JOIN airport d ON f.destination_id = d.id
+    WHERE f.dates = CURDATE()
+    ORDER BY f.boarding_time
+");
+
+$gate_assignments = mysqli_query($db, "
+    SELECT f.flight_no, a.name AS airline_name, f.type, g.gate, f.boarding_time
+    FROM flight f
+    JOIN airline a ON f.airline_id = a.id
+    JOIN gate g ON f.gate_id = g.id
+    WHERE f.dates = CURDATE()
+    ORDER BY f.boarding_time
+");
 ?>
 
 <!DOCTYPE html>
@@ -132,30 +160,14 @@ LIMIT 7
             <th>Status</th>
             <th>Current Flight</th>
         </tr>
+        <?php while($row = mysqli_fetch_assoc($gate_status)): ?>
         <tr>
-            <td>A01</td>
-            <td>Terminal 1</td>
-            <td>Available</td>
-            <td>-</td>
+            <td><?php echo $row['gate']; ?></td>
+            <td><?php echo $row['terminal_name']; ?></td>
+            <td><?php echo $row['status']; ?></td>
+            <td><?php echo $row['flight_no'] ? $row['flight_no'] : '-'; ?></td>
         </tr>
-        <tr>
-            <td>A02</td>
-            <td>Terminal 1</td>
-            <td>close</td>
-            <td>KK123</td>
-        </tr>
-        <tr>
-            <td>B01</td>
-            <td>Terminal 2</td>
-            <td>Available</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td>B02</td>
-            <td>Terminal 2</td>
-            <td>Maintenance</td>
-            <td>-</td>
-        </tr>
+        <?php endwhile; ?>
     </table>
 </div>
 
@@ -169,27 +181,15 @@ LIMIT 7
             <th>Assigned Gate</th>
             <th>Time</th>
         </tr>
+        <?php while($row = mysqli_fetch_assoc($gate_assignments)): ?>
         <tr>
-            <td>AA456</td>
-            <td>Arbat Airlines</td>
-            <td>Departure</td>
-            <td>C01</td>
-            <td>14:30</td>
+            <td><?php echo $row['flight_no']; ?></td>
+            <td><?php echo $row['airline_name']; ?></td>
+            <td><?php echo $row['type']; ?></td>
+            <td><?php echo $row['gate']; ?></td>
+            <td><?php echo date("h:i A", strtotime($row['boarding_time'])); ?></td>
         </tr>
-        <tr>
-            <td>SS789</td>
-            <td>Suli Air Lines</td>
-            <td>Arrival</td>
-            <td>C02</td>
-            <td>15:45</td>
-        </tr>
-        <tr>
-            <td>UA234</td>
-            <td>United Airlines</td>
-            <td>Departure</td>
-            <td>Pending</td>
-            <td>16:15</td>
-        </tr>
+        <?php endwhile; ?>
     </table>
 </div>
 <?php endif; ?>
@@ -208,34 +208,15 @@ LIMIT 7
             <th>Status</th>
             <th>Boarding Time</th>
         </tr>
+        <?php while($row = mysqli_fetch_assoc($scheduled_flights)): ?>
         <tr>
-            <td>KK123</td>
-            <td>Kurdistan Airlines</td>
-            <td>EBL → BHD</td>
-            <td>On Time</td>
-            <td>13:00</td>
+            <td><?php echo $row['flight_no']; ?></td>
+            <td><?php echo $row['airline_name']; ?></td>
+            <td><?php echo $row['origin_name'] . " → " . $row['destination_name']; ?></td>
+            <td><?php echo $row['statuss']; ?></td>
+            <td><?php echo date("h:i A", strtotime($row['boarding_time'])); ?></td>
         </tr>
-        <tr>
-            <td>AA456</td>
-            <td>Arbat Airlines</td>
-            <td>BGW → CAI</td>
-            <td>On Time</td>
-            <td>14:30</td>
-        </tr>
-        <tr>
-            <td>SS789</td>
-            <td>Suli Air Lines</td>
-            <td>DXB → EBL</td>
-            <td>On Time</td>
-            <td>15:45</td>
-        </tr>
-        <tr>
-            <td>UA234</td>
-            <td>United Airlines</td>
-            <td>LHR → BGW</td>
-            <td>On Time</td>
-            <td>16:15</td>
-        </tr>
+        <?php endwhile; ?>
     </table>
 </div>
 <?php endif; ?>
