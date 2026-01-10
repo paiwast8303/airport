@@ -9,7 +9,7 @@ $roles = $_SESSION['role'];
 
 $qgate = mysqli_query($db, "SELECT * FROM `gate`");
 $flights = mysqli_query($db, "
-    SELECT f.flight_no, f.type, f.statuss, f.dates, f.boarding_time,
+    SELECT f.flight_no, f.type, f.statuss, f.dates, f.boarding_time,f.departure_time,f.arrival_time,
            a.name AS airline_name,
            g.gate AS gate_name,
            o.name AS origin_name,
@@ -217,8 +217,17 @@ $airlines = mysqli_query($db, "SELECT * FROM `airline`");
         <input type="date" class="form-control" id="date" value="<?php echo date('Y-m-d'); ?>">
       </div>
       <div class="col-md-6">
-        <label for="time" class="form-label">Time:</label>
-        <input type="time" class="form-control" id="time" value="<?php echo date('H:i'); ?>">
+        <label for="time" class="form-label">boarding_time:</label>
+        <input type="time" class="form-control" id="time">
+      </div>
+      
+      <div class="col-md-6">
+        <label for="departureTime" class="form-label">Departure Time:</label>
+        <input type="time" class="form-control" id="departureTime" >
+      </div>
+      <div class="col-md-6">
+        <label for="arrivalTime" class="form-label">Arrival Time:</label>
+        <input type="time" class="form-control" id="arrivalTime" >
       </div>
     </div>
   </div>
@@ -280,7 +289,9 @@ $airlines = mysqli_query($db, "SELECT * FROM `airline`");
                         <th>Destination</th>
                         <th>Status</th>
                         <th>Date</th>
-                        <th>Time</th>
+                        <th>boarding_time</th>
+                        <th>departure_time</th>
+                        <th>arrival_time</th>
                         
                         <th>Actions</th>
                     </tr>
@@ -295,10 +306,11 @@ $airlines = mysqli_query($db, "SELECT * FROM `airline`");
                           <td><?php echo $row['statuss']; ?></td>
                           <td><?php echo $row['dates']; ?></td>
                           <td><?php echo $row['boarding_time']; ?></td>
+                          <td><?php echo $row['departure_time']; ?></td>
+                          <td><?php echo $row['arrival_time']; ?></td>
                           <td>
                             <div style="display: flex; flex-direction: column; gap: 5px;">
                                 <button style="background: none; border: none; color: rgb(8, 164, 255); font-size: 24px;">✎</button>
-                                <button style="background: none; border: none; font-size: 24px;">🗑️</button>
                             </div>
                           </td>
                       </tr>
