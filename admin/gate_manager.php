@@ -3,7 +3,7 @@
 include 'include/config.php';
 
 session_start();
-if($_SESSION['role']==''){
+if($_SESSION['role']=='' || $_SESSION['role'] == 'Flight Manger'){
     header("Location: index.php");
     exit();
 }
@@ -52,7 +52,7 @@ $total_closed = mysqli_num_rows($gateclosed);
     <link rel="stylesheet" href="style/gate.css">
 </head>
 <body>
-    
+    <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">

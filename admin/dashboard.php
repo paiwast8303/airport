@@ -116,7 +116,6 @@ $gate_assignments = mysqli_query($db, "
                                 <th>Airline</th>
                                 <th>Status</th>
                             </tr>
-                      
                             <?php while($row = mysqli_fetch_assoc($flights)): ?>
                                   <tr>
                                 <td><?php echo $row['flight_no']; ?></td>
