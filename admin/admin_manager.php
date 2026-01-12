@@ -1,7 +1,7 @@
 <?php 
 include 'include/config.php';
 session_start();
-if($_SESSION['role']==''){
+if($_SESSION['role']=='' || $_SESSION['role'] == 'Flight Manger' || $_SESSION['role'] == 'Gate Manger'){
     header("Location: index.php");
     exit();
 }
@@ -49,6 +49,7 @@ if(isset($_GET['filter_aut'])){
     if(!empty($admin_id)){
         $audit_log_query .= " AND `admin_id` = '$admin_id'";
     }
+
 
     if(!empty($date_range)){
         if($date_range == 'today'){
