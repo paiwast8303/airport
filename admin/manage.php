@@ -32,115 +32,8 @@ $airlines = mysqli_query($db, "SELECT * FROM `airline`");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        html, body {
-            height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-        }
-
-        *{
-            margin: 0;
-        }
-
-        #bd{
-            display: flex;
-            height: 100%;
-        }
-
-        #sidebar{
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-            padding: 20px;
-            width: 220px;
-            height: 100%;
-            position: fixed;
-        }
-
-#sidebar ul {
-    padding-left: 0;
-    margin-top: 20px;
-}
-
-#sidebar ul li {
-    list-style: none;
-    padding: 12px 15px;
-    width: auto;
-    border-radius: 8px;
-    margin: 8px 0;
-    margin-bottom: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-}
-
-#sidebar ul li:hover ,#sidebar ul li.active  {
-    background: rgba(255, 255, 255, 0.25);
-    transform: translateX(5px);
-}
-
-.panel{
-    margin-left: 275px;
-    width: 100%;
-    padding: 30px;
-
-}
-
-.header {
-            padding: 20px 30px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .add_f{
-        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-        color: white;
-        border-radius: 5px;
-        padding: 8px;
-        }
-
-        .add_f:hover{
-                        transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(42, 82, 152, 0.4);
-
-        }
-        .cont{
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            overflow: auto;
-        }
-        select{
-            padding: 8px;
-            border-radius: 10px;
-        }
-
-        table{
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
-
-        table th {
-            background: #f5f6fa;
-            border-bottom: 2px solid #ddd;
-            padding: 12px;
-            text-align: left;
-            font-weight: 600;
-            color: #1e3c72;
-        }
-
-        table td {
-            padding: 10px 12px;
-            border-bottom: 1px solid #eee;
-        }
-    </style>
+     <link rel="stylesheet" href="style/manage.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-
 </head>
 <body>
 
@@ -152,16 +45,16 @@ $airlines = mysqli_query($db, "SELECT * FROM `airline`");
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form id="manage_add" action="include/flight_manage.php" method="post">
   <div class="container-fluid">
     <div class="row g-3">
       <div class="col-md-6">
         <label for="flightNo" class="form-label">Flight No:</label>
-        <input type="text" class="form-control" id="flightNo" placeholder="e.g., AA123">
+        <input name="flight_no" type="text" class="form-control" id="flightNo" placeholder="e.g., AA123">
       </div>
       <div class="col-md-6">
         <label for="airline" class="form-label">Airline:</label>
-        <select class="form-control" id="airline">
+        <select name="airline_id" class="form-control" id="airline">
           <option value="">Select Airline</option>
           <?php while($row = mysqli_fetch_assoc($airlines)): ?>
           <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
@@ -170,7 +63,7 @@ $airlines = mysqli_query($db, "SELECT * FROM `airline`");
       </div>
       <div class="col-md-6">
         <label for="flightType" class="form-label">Flight Type:</label>
-        <select class="form-control" id="flightType">
+        <select name="type" class="form-control" id="flightType">
           <option value="">Select Type</option>
           <option value="arrival">Arrival</option>
           <option value="departure">Departure</option>
@@ -178,7 +71,7 @@ $airlines = mysqli_query($db, "SELECT * FROM `airline`");
       </div>
       <div class="col-md-6">
         <label for="gate" class="form-label">Gate:</label>
-        <select class="form-control" id="gate">
+        <select name="gate_id" class="form-control" id="gate">
           <option value="">Select Gate</option>
           <?php while($row = mysqli_fetch_assoc($qgate)): ?>
           <option value="<?php echo $row['id']; ?>"><?php echo $row['gate']; ?></option>
@@ -187,7 +80,7 @@ $airlines = mysqli_query($db, "SELECT * FROM `airline`");
       </div>
       <div class="col-md-6">
         <label for="origin" class="form-label">Origin:</label>
-        <select class="form-control" id="origin">
+        <select name="origin_id" class="form-control" id="origin">
           <option value="">Select Origin</option>
           <?php while($row = mysqli_fetch_assoc($oairport)): ?>
           <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
@@ -196,7 +89,7 @@ $airlines = mysqli_query($db, "SELECT * FROM `airline`");
       </div>
       <div class="col-md-6">
         <label for="destination" class="form-label">Destination:</label>
-        <select class="form-control" id="destination">
+        <select name="destination_id" class="form-control" id="destination">
           <option value="">Select Destination</option>
           <?php while($row = mysqli_fetch_assoc($dairport)): ?>
           <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
@@ -205,29 +98,30 @@ $airlines = mysqli_query($db, "SELECT * FROM `airline`");
       </div>
       <div class="col-md-6">
         <label for="status" class="form-label">Status:</label>
-        <select class="form-control" id="status">
+        <select name="statuss" class="form-control" id="status">
           <option value="">Select Status</option>
-          <option value="on-time">On Time</option>
-          <option value="delayed">Delayed</option>
-          <option value="cancelled">Cancelled</option>
+          <option value="scheduled">scheduled</option>
+          <option value="ontime">ontime</option>
+          <option value="delayed">delayed</option>
+          <option value="cancelled">cancelled</option>
         </select>
       </div>
       <div class="col-md-6">
         <label for="date" class="form-label">Date:</label>
-        <input type="date" class="form-control" id="date" value="<?php echo date('Y-m-d'); ?>">
+        <input name="date" type="date" class="form-control" id="date" value="<?php echo date('Y-m-d'); ?>">
       </div>
       <div class="col-md-6">
         <label for="time" class="form-label">boarding_time:</label>
-        <input type="time" class="form-control" id="time">
+        <input name="boarding_time" type="time" class="form-control" id="time">
       </div>
       
       <div class="col-md-6">
         <label for="departureTime" class="form-label">Departure Time:</label>
-        <input type="time" class="form-control" id="departureTime" >
+        <input name="departure_time" type="time" class="form-control" id="departureTime" >
       </div>
       <div class="col-md-6">
         <label for="arrivalTime" class="form-label">Arrival Time:</label>
-        <input type="time" class="form-control" id="arrivalTime" >
+        <input name="arrival_time" type="time" class="form-control" id="arrivalTime" >
       </div>
     </div>
   </div>
@@ -235,7 +129,7 @@ $airlines = mysqli_query($db, "SELECT * FROM `airline`");
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Submit</button>
+        <button form="manage_add" name="submit_add" type="submit" class="btn btn-primary">Submit</button>
       </div>
     </div>
   </div>
@@ -267,7 +161,7 @@ $airlines = mysqli_query($db, "SELECT * FROM `airline`");
 
             </div>
             <div class="cont">
-               <form>
+               
                 <label>Filter by Status</label>
                 <select>
                     <option>All Status</option>
@@ -295,28 +189,133 @@ $airlines = mysqli_query($db, "SELECT * FROM `airline`");
                         
                         <th>Actions</th>
                     </tr>
-                    <?php while($row = mysqli_fetch_assoc($flights)): ?>
+                    <?php while($row_1 = mysqli_fetch_assoc($flights)): ?>
+    <div class="modal fade" id="updatefl<?php echo $row_1['id'];?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Update Flight</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="manageupdate<?php echo $row_1['id'];?>" name="update_flight-id-<?php echo $row_1['id'];?>" action="include/flight_manage.php" method="post">
+  <div class="container-fluid">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label for="flightNo" class="form-label">Flight No:</label>
+        <input name="flight_no" type="text" class="form-control" id="flightNo" placeholder="e.g., AA123" value="<?php echo $row_1['flight_no']; ?>">
+      </div>
+      <div class="col-md-6">
+        <label for="airline" class="form-label">Airline:</label>
+        <select name="airline_id" class="form-control" id="airline">
+          <option value="<?php echo $row_1['airline_id']; ?>"><?php echo $row_1['airline_name']; ?>  </option>
+           <?php
+           $airlines2 = mysqli_query($db, "SELECT * FROM `airline`");
+            while($row_2 = mysqli_fetch_assoc($airlines2)): ?>
+          <option value="<?php echo $row_2['id']; ?>"><?php echo $row_2['name']; ?></option>
+          <?php endwhile; ?>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="flightType" class="form-label">Flight Type:</label>
+        <select name="type" class="form-control" id="flightType">
+          <option value="">Select Type</option>
+          <option value="arrival" <?php echo ($row_1['type'] == 'arrival') ? 'selected' : ''; ?>>Arrival</option>
+          <option value="departure" <?php echo ($row_1['type'] == 'departure') ? 'selected' : ''; ?>>Departure</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="gate" class="form-label">Gate:</label>
+        <select name="gate_id" class="form-control" id="gate">
+          <option value="<?php echo $row_1['gate_id']; ?>"><?php echo $row_1['gate_name']; ?></option>
+          <?php $qgate2 = mysqli_query($db, "SELECT * FROM `gate`");
+          while($row = mysqli_fetch_assoc($qgate2)): ?>
+          <option value="<?php echo $row['id']; ?>"><?php echo $row['gate']; ?></option>
+          <?php endwhile; ?>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="origin" class="form-label">Origin:</lab2el>
+        <select name="origin_id" class="form-control" id="origin" >
+          <option value="<?php echo $row_1['origin_id']; ?>"><?php echo $row_1['origin_name']; ?></option>
+          <?php
+            $oairport2 = mysqli_query($db, "SELECT * FROM `airport`");
+           while($row = mysqli_fetch_assoc($oairport2)): ?>
+          <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
+          <?php endwhile; ?>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="destination" class="form-label">Destination:</label>
+        <select name="destination_id" class="form-control" id="destination">
+          <option value="<?php echo $row_1['destination_id']; ?>"><?php echo $row_1['destination_name']; ?></option>
+          <?php 
+            $dairport2 = mysqli_query($db, "SELECT * FROM `airport`");
+          while($row = mysqli_fetch_assoc($dairport2)): ?>
+          <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
+          <?php endwhile; ?>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="status" class="form-label">Status:</label>
+        <select name="statuss" class="form-control" id="status">
+          <option value="">Select Status</option>
+          <option value="scheduled" <?php echo ($row_1['statuss'] == 'scheduled') ? 'selected' : ''; ?>>scheduled</option>
+          <option value="ontime" <?php echo ($row_1['statuss'] == 'ontime') ? 'selected' : ''; ?>>ontime</option>
+          <option value="delayed" <?php echo ($row_1['statuss'] == 'delayed') ? 'selected' : ''; ?>>delayed</option>
+          <option value="cancelled" <?php echo ($row_1['statuss'] == 'cancelled') ? 'selected' : ''; ?>>cancelled</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="date" class="form-label">Date:</label>
+        <input  name="date" type="date" class="form-control" id="date" value="<?php echo $row_1['dates']; ?>">
+      </div>
+      <div class="col-md-6">
+        <label for="time" class="form-label">boarding_time:</label>
+        <input name="boarding_time" type="time" class="form-control" id="time" value="<?php echo $row_1['boarding_time']; ?>">
+      </div>
+      
+      <div class="col-md-6">
+        <label for="departureTime" class="form-label">Departure Time:</label>
+        <input name="departure_time" type="time" class="form-control" id="departureTime" value="<?php echo $row_1['departure_time']; ?>">
+      </div>
+      <div class="col-md-6">
+        <label for="arrivalTime" class="form-label">Arrival Time:</label>
+        <input name="arrival_time" type="time" class="form-control" id="arrivalTime"  value="<?php echo $row_1['arrival_time']; ?>">
+      </div>
+    </div>
+  </div>
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button form="manageupdate<?php echo $row_1['id'];?>" name="submit_update" type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
                       <tr>
-                          <td><?php echo $row['flight_no']; ?></td>
-                          <td><?php echo $row['airline_name']; ?></td> 
-                          <td><?php echo $row['type']; ?></td>
-                          <td><?php echo $row['gate_name']; ?></td> 
-                          <td><?php echo $row['origin_name']; ?></td> 
-                          <td><?php echo $row['destination_name']; ?></td> 
-                          <td><?php echo $row['statuss']; ?></td>
-                          <td><?php echo $row['dates']; ?></td>
-                          <td><?php echo $row['boarding_time']; ?></td>
-                          <td><?php echo $row['departure_time']; ?></td>
-                          <td><?php echo $row['arrival_time']; ?></td>
+                          <td><?php echo $row_1['flight_no']; ?></td>
+                          <td><?php echo $row_1['airline_name']; ?></td> 
+                          <td><?php echo $row_1['type']; ?></td>
+                          <td><?php echo $row_1['gate_name']; ?></td> 
+                          <td><?php echo $row_1['origin_name']; ?></td> 
+                          <td><?php echo $row_1['destination_name']; ?></td> 
+                          <td><?php echo $row_1['statuss']; ?></td>
+                          <td><?php echo $row_1['dates']; ?></td>
+                          <td><?php echo $row_1['boarding_time']; ?></td>
+                          <td><?php echo $row_1['departure_time']; ?></td>
+                          <td><?php echo $row_1['arrival_time']; ?></td>
                           <td>
                             <div style="display: flex; flex-direction: column; gap: 5px;">
-                                <button style="background: none; border: none; color: rgb(8, 164, 255); font-size: 24px;">✎</button>
+                              <button style="background: none; border: none; color: rgb(8, 164, 255); font-size: 24px;" type="button" class="btn btn-primary add_f"  data-bs-toggle="modal" data-bs-target="#updatefl<?php echo $row_1['id']; ?>" data-bs-whatever="@mdo">✎</button>
+                              
                             </div>
                           </td>
                       </tr>
                     <?php endwhile; ?>
                 </table>
-               </form>
+               
             </div>
         </div>
         

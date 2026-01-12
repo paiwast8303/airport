@@ -1,5 +1,9 @@
+<?php 
+include 'include/config.php';
+
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html >
 <head>
 <meta charset="UTF-8">
 <title>Flight Details</title>

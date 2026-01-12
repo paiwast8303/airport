@@ -9,9 +9,21 @@ $role = clear($_POST['role']);
 $status = clear($_POST['status']);
 
 $password_hash = password_hash($password, PASSWORD_BCRYPT);
+$select_admin = mysqli_query($db , "SELECT * FROM `admin` WHERE `id` = $id;");
+$row = mysqli_fetch_assoc($select_admin);
 
-
+if($password == $row['passwords'])
+    {
+      
+$update_query = mysqli_query($db , "UPDATE `admin` SET `fname` = '$fname', `lname` = '$lname', `Email` = '$Email', `role` = '$role', `statuss` = '$status' WHERE `admin`.`id` = $id;");
+   }
+else
+    {
+    
 $update_query = mysqli_query($db , "UPDATE `admin` SET `fname` = '$fname', `lname` = '$lname', `Email` = '$Email', `passwords` = '$password_hash', `role` = '$role', `statuss` = '$status' WHERE `admin`.`id` = $id;");
+    }
+
+
 if($update_query){
      session_start();
     $admin_name = $_SESSION['name'];

@@ -1,4 +1,26 @@
+<?php 
+include 'include/config.php';
 
+$flight_d_q = mysqli_query($dbs ,"
+SELECT `f`.`flight_no` ,`a`.`name`,`p`.`name` , `f`.`departure_time`,`g`.`gate` ,`f`.`statuss`
+FROM `flight`as `f` 
+JOIN `airline` as `a` on  	`f`.`airline_id` = `a`.`id`
+JOIN `airport` as `p` on `f`.`destination_id` = `p`.`id`
+JOIN `gate` as `g`  on `f`.`gate_id` = `g`.`id`
+WHERE `f`.`type` = 'departure'
+");
+
+$flight_a_q = mysqli_query($dbs ,"
+SELECT `f`.`flight_no` ,`a`.`name`,`p`.`name` , `f`.`departure_time`,`g`.`gate` ,`f`.`statuss`
+FROM `flight`as `f` 
+JOIN `airline` as `a` on  	`f`.`airline_id` = `a`.`id`
+JOIN `airport` as `p` on `f`.`origin_id` = `p`.`id`
+JOIN `gate` as `g`  on `f`.`gate_id` = `g`.`id`
+WHERE `f`.`type` = 'arrival'
+");
+
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,77 +96,41 @@
             </div>
 
             <div id="departuresContent">
+                <?php while($flight_d_row = mysqli_fetch_array($flight_d_q)): ?>
                 <div class="flight">
                     <div>
-                        <div>KK123</div>
-                        <div>Kurdistan Airlines</div>
+                        <div><?php echo $flight_d_row['flight_no']; ?></div>
+                        <div><?php echo $flight_d_row['name']; ?></div>
                     </div>
-                    <div>Istanbul (IST)</div>
-                    <div>14:30</div>
-                    <div>Gate A1</div>
+                    <div><?php echo $flight_d_row['name']; ?></div>
+                    <div><?php echo $flight_d_row['departure_time']; ?></div>
+                    <div><?php echo $flight_d_row['gate']; ?></div>
                     <div style="background: rgba(22,163,74,0.2); color: #16a34a; border: 1px solid rgba(22,163,74,0.3); padding: 6px 16px; border-radius: 20px; font-weight: 600; text-align: center;">On Time</div>
                 </div>
+                <?php endwhile; ?>
 
-                <div class="flight">
-                    <div>
-                        <div>AA456</div>
-                        <div>Arbat Airlines</div>
-                    </div>
-                    <div>Dubai (DXB)</div>
-                    <div>15:45</div>
-                    <div>Gate B2</div>
-                    <div style="background: rgba(245,158,11,0.2); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); padding: 6px 16px; border-radius: 20px; font-weight: 600; text-align: center;">Delayed</div>
-                </div>
 
-                <div class="flight">
-                    <div>
-                        <div>SS789</div>
-                        <div>Suli Airlines</div>
-                    </div>
-                    <div>Baghdad (BGW)</div>
-                    <div>16:20</div>
-                    <div>Gate C3</div>
-                    <div style="background: rgba(37,99,235,0.2); color: #2563eb; border: 1px solid rgba(37,99,235,0.3); padding: 6px 16px; border-radius: 20px; font-weight: 600; text-align: center;">Boarding</div>
-                </div>
-
-                <div class="flight">
-                    <div>
-                        <div>EK901</div>
-                        <div>Emirates</div>
-                    </div>
-                    <div>London (LHR)</div>
-                    <div>18:00</div>
-                    <div>Gate A5</div>
-                    <div style="background: rgba(22,163,74,0.2); color: #16a34a; border: 1px solid rgba(22,163,74,0.3); padding: 6px 16px; border-radius: 20px; font-weight: 600; text-align: center;">On Time</div>
-                </div>
             </div>
 
             <div id="arrivalsContent" style="display: none;">
+                <?php while($flight_a_row = mysqli_fetch_array($flight_a_q)): ?>
                 <div class="flight">
                     <div>
-                        <div>TK567</div>
-                        <div>Turkish Airlines</div>
+                        <div><?php echo $flight_a_row['flight_no']; ?></div>
+                        <div><?php echo $flight_a_row['name']; ?></div>
                     </div>
-                    <div>From Istanbul (IST)</div>
-                    <div>13:45</div>
-                    <div>Gate A2</div>
+                    <div>From <?php echo $flight_a_row['name']; ?></div>
+                    <div><?php echo $flight_a_row['departure_time']; ?></div>
+                    <div><?php echo $flight_a_row['gate']; ?></div>
                     <div style="background: rgba(22,163,74,0.2); color: #16a34a; border: 1px solid rgba(22,163,74,0.3); padding: 6px 16px; border-radius: 20px; font-weight: 600; text-align: center;">Landed</div>
                 </div>
+                <?php endwhile; ?>
 
-                <div class="flight">
-                    <div>
-                        <div>QR234</div>
-                        <div>Qatar Airways</div>
-                    </div>
-                    <div>From Doha (DOH)</div>
-                    <div>14:15</div>
-                    <div>Gate B3</div>
-                    <div style="background: rgba(22,163,74,0.2); color: #16a34a; border: 1px solid rgba(22,163,74,0.3); padding: 6px 16px; border-radius: 20px; font-weight: 600; text-align: center;">On Time</div>
-                </div>
+            
             </div>
 
             <div style="text-align: center; margin-top: 30px;">
-                <a href="flights.html" class="btn btn-primary btn-lg">View All Flights</a>
+                <a href="flights.php" class="btn btn-primary btn-lg">View All Flights</a>
             </div>
         </div>
     </div>
@@ -153,8 +139,8 @@
         <div class="container">
             <div>
                 <h5>Contact</h5>
-                <p>📞 +964 771 156 1401</p>
-                <p>✉️ miran22.osman@gmail.com</p>
+                <p>📞 053 653 4343</p>
+                <p>✉️ airportsuli.com</p>
                 <p>📍 m7adakay qrga</p>
             </div>
             <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 30px; padding-top: 20px; text-align: center; color: rgba(255,255,255,0.7);">

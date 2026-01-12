@@ -1,2 +1,5 @@
 <?php 
-$db = mysqli_connect("localhost", "root", "", "airport");
+$dbs = mysqli_connect("localhost", "root", "", "airport");
+
+
+?>

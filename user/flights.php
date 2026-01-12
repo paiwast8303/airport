@@ -1,3 +1,17 @@
+<?php
+include 'include/config.php';
+
+$flight_a_q1 = mysqli_query($dbs ,"
+SELECT `f`.`flight_no` ,`a`.`name`,`p`.`code` as 'code1',`pd`.`code` as 'code2' , `f`.`departure_time`,`g`.`gate` ,`f`.`statuss`
+FROM `flight`as `f` 
+JOIN `airline` as `a` on  	`f`.`airline_id` = `a`.`id`
+JOIN `airport` as `p` on `f`.`origin_id` = `p`.`id`
+JOIN `airport` as `pd` on `f`.`destination_id` = `pd`.`id`
+JOIN `gate` as `g`  on `f`.`gate_id` = `g`.`id`
+WHERE `f`.`type` = 'arrival'");
+
+
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,19 +75,20 @@
 
     <!-- DEPARTURES -->
     <div id="departures" class="ft-cont">
+        <?php while($flight_a_row1 = mysqli_fetch_array($flight_a_q1)): ?>
         <div class="ft-card" onclick="window.location.href='flight-details.html'">
             <div class="ft-hdr">
                 <div>
-                    <div class="ft-num">KK123</div>
-                    <div class="air">Kurdistan Airlines</div>
+                    <div class="ft-num"><?php echo $flight_a_row1['flight_no']; ?></div>
+                    <div class="air"><?php echo $flight_a_row1['name']; ?></div>
                 </div>
-                <div class="stat on-time">On Time</div>
+                <div class="stat on-time"><?php echo $flight_a_row1['statuss']; ?></div>
             </div>
 
             <div class="ft-body">
                 <div class="loc-info">
-                    <div class="loc-code">EBL</div>
-                    <div class="time">14:30</div>
+                    <div class="loc-code"><?php echo $flight_a_row1['code2']; ?></div>
+                    <div class="time"><?php echo $flight_a_row1['departure_time']; ?></div>
                 </div>
                 <div class="ft-route">
                     ✈️
@@ -81,16 +96,17 @@
                     2h 15m
                 </div>
                 <div class="loc-info">
-                    <div class="loc-code">IST</div>
-                    <div class="time">16:45</div>
+                    <div class="loc-code"><?php echo $flight_a_row1['name']; ?></div>
+                    <div class="time"><?php echo $flight_a_row1['departure_time']; ?></div>
                 </div>
             </div>
 
             <div class="ft-ftr">
-                <span>Gate <span class="gate">A1</span></span>
+                <span>Gate <span class="gate"><?php echo $flight_a_row1['gate']; ?></span></span>
                 <span>Terminal 1</span>
             </div>
         </div>
+        <?php endwhile; ?>
     </div>
 
     <!-- ARRIVALS -->
