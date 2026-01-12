@@ -20,7 +20,8 @@ if($add_query){
     }else{ 
         header("Location: ../../gate_manager.php?error=Failed to add gate");
     }
-}else{
+}
+else{
     header("Location: ../../gate_manager.php?error=Failed to add gate");
 }
 ?>
