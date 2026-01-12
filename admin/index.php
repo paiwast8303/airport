@@ -17,8 +17,16 @@ if (isset($_POST['submit'])) {
         $_SESSION['name'] = $row['fname']; 
         $_SESSION['role'] = $row['role'];
         $_SESSION['id'] = $row['id'];
+            
+    $admin_name = $_SESSION['name'];
+    $admin_id = $_SESSION['id'];
+    $detils = "$admin_name logged in";
+    $aql = mysqli_query($db, "INSERT INTO `audit_log` ( `admin_id`, `action_type`, `detail`) VALUES ( '$admin_id', 'login', '$detils');");
+
+    if($aql){
         header("Location: dashboard.php");
         exit();
+    }
     }
     else if ($count == 1 && $row['statuss'] == 'active' && !password_verify($password, $row['passwords']))
     {

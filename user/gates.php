@@ -1,3 +1,11 @@
+<?php
+include 'include/config.php';
+
+$gateterminal1 = mysqli_query($dbs , "SELECT * FROM `gate` WHERE `terminal_id` = 1");
+$gateterminal2 = mysqli_query($dbs , "SELECT * FROM `gate` WHERE `terminal_id` = 2");
+
+
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,10 +25,10 @@
     <div class="container d-flex justify-content-between align-items-center">
         <div style="font-size: 1.5rem; font-weight: bold;">✈️ Airport Info</div>
         <div>
-            <a href="index.html">Home</a>
-            <a href="flights.html">Flights</a>
-            <a href="gates.html" class="active">Gates</a>
-            <a href="help.html">Help</a>
+            <a href="index.php">Home</a>
+            <a href="flights.php">Flights</a>
+            <a href="gates.php" class="active">Gates</a>
+            <a href="help.php">Help</a>
         </div>
     </div>
 </nav>
@@ -45,18 +53,12 @@
         <div id="terminal1-content">
             <h4 class="mb-3">Concourse A</h4>
             <div class="gate-grid">
+                <?php while($gate1 = mysqli_fetch_assoc($gateterminal1)):?>
                 <div class="gate-card available">
-                    <div class="gate-number">A1</div>
-                    <div class="gate-status">Available</div>
+                    <div class="gate-number"><?php echo $gate1['gate']?></div>
+                    <div class="gate-status"><?php echo $gate1['status']?></div>
                 </div>
-                <div class="gate-card occupied">
-                    <div class="gate-number">A2</div>
-                    <div class="gate-status">Occupied</div>
-                </div>
-                <div class="gate-card maintenance">
-                    <div class="gate-number">A3</div>
-                    <div class="gate-status">Maintenance</div>
-                </div>
+                <?php endwhile; ?>
             </div>
 
             <div class="facilities-section">
@@ -72,16 +74,14 @@
 
         <!-- TERMINAL 2 -->
         <div id="terminal2-content" style="display:none;">
-            <h4 class="mb-3">Concourse C</h4>
+            <h4 class="mb-3">Concourse B</h4>
             <div class="gate-grid">
+                <?php while($gate2 = mysqli_fetch_assoc($gateterminal2)):?>
                 <div class="gate-card available">
-                    <div class="gate-number">C1</div>
-                    <div class="gate-status">Available</div>
+                    <div class="gate-number"><?php echo $gate2['gate']?></div>
+                    <div class="gate-status"><?php echo $gate2['status']?></div>
                 </div>
-                <div class="gate-card occupied">
-                    <div class="gate-number">C2</div>
-                    <div class="gate-status">Occupied</div>
-                </div>
+                <?php endwhile; ?>
             </div>
 
             <div class="facilities-section">

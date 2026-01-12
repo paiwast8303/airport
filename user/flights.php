@@ -1,14 +1,48 @@
 <?php
 include 'include/config.php';
 
-$flight_a_q1 = mysqli_query($dbs ,"
-SELECT `f`.`flight_no` ,`a`.`name`,`p`.`code` as 'code1',`pd`.`code` as 'code2' , `f`.`departure_time`,`g`.`gate` ,`f`.`statuss`
+$flight_a_query1 = "
+SELECT `f`.`id`, `f`.`flight_no` ,`a`.`name` AS 'airline',`p`.`code` as 'origin',`pd`.`code` as 'destination' , `f`.`departure_time`, `f`.`arrival_time` ,`g`.`gate` ,`t`.`name` ,`f`.`statuss`
 FROM `flight`as `f` 
 JOIN `airline` as `a` on  	`f`.`airline_id` = `a`.`id`
 JOIN `airport` as `p` on `f`.`origin_id` = `p`.`id`
 JOIN `airport` as `pd` on `f`.`destination_id` = `pd`.`id`
 JOIN `gate` as `g`  on `f`.`gate_id` = `g`.`id`
-WHERE `f`.`type` = 'arrival'");
+JOIN `terminal` AS `t` ON `g`.`terminal_id` = `t`.`id`
+WHERE `f`.`type` = 'departure'";
+$flight_a_query2 = "
+SELECT `f`.`id`, `f`.`flight_no` ,`a`.`name` AS 'airline',`p`.`code` as 'origin',`pd`.`code` as 'destination' , `f`.`departure_time`, `f`.`arrival_time` ,`g`.`gate` ,`t`.`name` ,`f`.`statuss`
+FROM `flight`as `f` 
+JOIN `airline` as `a` on  	`f`.`airline_id` = `a`.`id`
+JOIN `airport` as `p` on `f`.`origin_id` = `p`.`id`
+JOIN `airport` as `pd` on `f`.`destination_id` = `pd`.`id`
+JOIN `gate` as `g`  on `f`.`gate_id` = `g`.`id`
+JOIN `terminal` AS `t` ON `g`.`terminal_id` = `t`.`id`
+WHERE `f`.`type` = 'arrival'";
+
+
+if(isset($_POST['submitsearch'])) {
+    $flightnos = mysqli_real_escape_string($dbs, $_POST['flightnos']);
+    $flighttype = mysqli_real_escape_string($dbs, $_POST['flighttype']);
+
+    if (!empty($flightnos)) {
+        $flight_a_query1 .= " AND `f`.`flight_no` LIKE '%$flightnos%'";
+        $flight_a_query2 .= " AND `f`.`flight_no` LIKE '%$flightnos%'";
+    }
+
+    if (!empty($flighttype)) {
+        if ($flighttype === 'departure') {
+            $flight_a_query2 = "SELECT * FROM `flight` WHERE 1=0"; // No arrivals
+        } elseif ($flighttype === 'arrival') {
+            $flight_a_query1 = "SELECT * FROM `flight` WHERE 1=0"; // No departures
+        }
+    }
+}
+
+
+
+$flight_a_q1 = mysqli_query($dbs ,$flight_a_query1);
+$flight_a_q2 = mysqli_query($dbs ,$flight_a_query2);
 
 
  ?>
@@ -30,10 +64,10 @@ WHERE `f`.`type` = 'arrival'");
     <div class="container d-flex justify-content-between align-items-center">
         <div style="font-size:1.5rem;font-weight:bold;">✈️ Airport Info</div>
         <div>
-            <a href="index.html">Home</a>
-            <a href="flights.html" class="active">Flights</a>
-            <a href="gates.html">Gates</a>
-            <a href="help.html">Help</a>
+            <a href="index.php">Home</a>
+            <a href="flights.php" class="active">Flights</a>
+            <a href="gates.php">Gates</a>
+            <a href="help.php">Help</a>
         </div>
     </div>
 </nav>
@@ -50,20 +84,15 @@ WHERE `f`.`type` = 'arrival'");
     <div class="flt-sec">
         <h5 class="mb-3">🔍 Search & Filter Flights</h5>
         <div class="d-flex gap-2 mb-3 flex-wrap">
-            <input type="text" class="form-control" placeholder="Search flight..." style="max-width:400px">
-            <button class="btn btn-primary">Search</button>
-        </div>
-
-        <div class="d-flex gap-3 flex-wrap">
-            <select class="form-select" style="max-width:200px">
-                <option>All Airlines</option>
-            </select>
-            <select class="form-select" style="max-width:200px">
-                <option>All Status</option>
-            </select>
-            <select class="form-select" style="max-width:200px">
-                <option>All Times</option>
-            </select>
+       <form method="post" action="flights.php">
+             <input name="flightnos" type="text" class="form-control" placeholder="Search flight NO..." style="max-width:400px">
+             <select name="flighttype" class="form-select" style="max-width:200px">
+                <option value="">All Types</option>
+                <option value="departure">Departures</option>
+                <option value="arrival">Arrivals</option>
+             </select>
+            <button name="submitsearch" type="submit" class="btn btn-primary">Search</button>
+       </form>
         </div>
     </div>
 
@@ -76,34 +105,37 @@ WHERE `f`.`type` = 'arrival'");
     <!-- DEPARTURES -->
     <div id="departures" class="ft-cont">
         <?php while($flight_a_row1 = mysqli_fetch_array($flight_a_q1)): ?>
-        <div class="ft-card" onclick="window.location.href='flight-details.html'">
+        <div class="ft-card" onclick="window.location.href='flight-details.php?flight_id=<?php echo $flight_a_row1['id']; ?>'">
             <div class="ft-hdr">
                 <div>
                     <div class="ft-num"><?php echo $flight_a_row1['flight_no']; ?></div>
-                    <div class="air"><?php echo $flight_a_row1['name']; ?></div>
+                    <div class="air"><?php echo $flight_a_row1['airline']; ?></div>
                 </div>
                 <div class="stat on-time"><?php echo $flight_a_row1['statuss']; ?></div>
             </div>
 
             <div class="ft-body">
                 <div class="loc-info">
-                    <div class="loc-code"><?php echo $flight_a_row1['code2']; ?></div>
+                    <div class="loc-code"><?php echo $flight_a_row1['origin']; ?></div>
                     <div class="time"><?php echo $flight_a_row1['departure_time']; ?></div>
                 </div>
                 <div class="ft-route">
                     ✈️
                     <div class="rt-line"></div>
-                    2h 15m
+                   <?php 
+                   $a = new DateTime($flight_a_row1['arrival_time']);
+                     $b = new DateTime($flight_a_row1['departure_time']);
+                   echo $a->diff($b)->format('%H:%I'); ?>
                 </div>
                 <div class="loc-info">
-                    <div class="loc-code"><?php echo $flight_a_row1['name']; ?></div>
-                    <div class="time"><?php echo $flight_a_row1['departure_time']; ?></div>
+                    <div class="loc-code"><?php echo $flight_a_row1['destination']; ?></div>
+                    <div class="time"><?php echo $flight_a_row1['arrival_time']; ?></div>
                 </div>
             </div>
 
             <div class="ft-ftr">
                 <span>Gate <span class="gate"><?php echo $flight_a_row1['gate']; ?></span></span>
-                <span>Terminal 1</span>
+                <span><?php echo $flight_a_row1['name']; ?></span>
             </div>
         </div>
         <?php endwhile; ?>
@@ -111,36 +143,42 @@ WHERE `f`.`type` = 'arrival'");
 
     <!-- ARRIVALS -->
     <div id="arrivals" class="ft-cont" style="display:none;">
-        <div class="ft-card" onclick="window.location.href='flight-details.html'">
+        <?php while($flight_a_row2 = mysqli_fetch_array($flight_a_q2)): ?>
+        <div class="ft-card" onclick="window.location.href='flight-details.php?flight_id=<?php echo $flight_a_row2['id']; ?>'">
             <div class="ft-hdr">
                 <div>
-                    <div class="ft-num">KK123</div>
-                    <div class="air">Kurdistan Airlines</div>
+                    <div class="ft-num"><?php echo $flight_a_row2['flight_no']; ?></div>
+                    <div class="air"><?php echo $flight_a_row2['airline']; ?></div>
                 </div>
-                <div class="stat on-time">On Time</div>
+                <div class="stat on-time"><?php echo $flight_a_row2['statuss']; ?></div>
             </div>
 
             <div class="ft-body">
                 <div class="loc-info">
-                    <div class="loc-code">EBL</div>
-                    <div class="time">14:30</div>
+                    <div class="loc-code"><?php echo $flight_a_row2['origin']; ?></div>
+                    <div class="time"><?php echo $flight_a_row2['departure_time']; ?></div>
                 </div>
                 <div class="ft-route">
                     ✈️
                     <div class="rt-line"></div>
-                    2h 15m
+                  <?php
+
+                   $q = new DateTime($flight_a_row2['arrival_time']);
+                        $r = new DateTime($flight_a_row2['departure_time']);
+                     echo $q->diff($r)->format('%H:%I'); ?>
                 </div>
                 <div class="loc-info">
-                    <div class="loc-code">IST</div>
-                    <div class="time">16:45</div>
+                    <div class="loc-code"><?php echo $flight_a_row2['destination']; ?></div>
+                    <div class="time"><?php echo $flight_a_row2['arrival_time']; ?></div>
                 </div>
             </div>
 
             <div class="ft-ftr">
-                <span>Gate <span class="gate">A1</span></span>
-                <span>Terminal 1</span>
+                <span>Gate <span class="gate"><?php echo $flight_a_row2['gate']; ?></span></span>
+                <span><?php echo $flight_a_row2['name']; ?></span>
             </div>
         </div>
+        <?php endwhile; ?>
     </div>
 
 </div>

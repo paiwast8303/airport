@@ -8,8 +8,8 @@ if($_SESSION['role']=='' || $_SESSION['role']== null || $_SESSION['role']== 'Gat
 $roles = $_SESSION['role'];
 
 $qgate = mysqli_query($db, "SELECT * FROM `gate`");
-$flights = mysqli_query($db, "
-    SELECT f.flight_no, f.type, f.statuss, f.dates, f.boarding_time,f.departure_time,f.arrival_time,
+
+$fl_query_filter = "SELECT f.flight_no, f.type, f.statuss, f.dates, f.boarding_time,f.departure_time,f.arrival_time,
            a.name AS airline_name,
            g.gate AS gate_name,
            o.name AS origin_name,
@@ -18,7 +18,21 @@ $flights = mysqli_query($db, "
     JOIN airline a ON f.airline_id = a.id
     JOIN gate g ON f.gate_id = g.id
     JOIN airport o ON f.origin_id = o.id
-    JOIN airport d ON f.destination_id = d.id
+    JOIN airport d ON f.destination_id = d.id";
+
+if (isset($_POST['filter_button'])) {
+    $type_filter = $_POST['type_filter'];
+
+    $conditions = [];
+    if (!empty($type_filter)) {
+        $conditions[] = "f.type = '$type_filter'";
+    }
+
+    if (count($conditions) > 0) {
+        $fl_query_filter .= " WHERE " . implode(" AND ", $conditions);
+    }
+}
+$flights = mysqli_query($db, "$fl_query_filter 
 ");
 
 $oairport = mysqli_query($db, "SELECT * FROM `airport`");
@@ -161,18 +175,15 @@ $airlines = mysqli_query($db, "SELECT * FROM `airline`");
 
             </div>
             <div class="cont">
-               
-                <label>Filter by Status</label>
-                <select>
-                    <option>All Status</option>
-                    <option>Delayed</option>
-                </select>
+              <form action="manage.php" method="post"> 
                  <label style="margin-left: 18px;">Filter by Type</label>
-                <select>
-                    <option>All Type</option>
-                    <option>Arrival</option>
-                    <option>departure</option>
+                <select name="type_filter">
+                    <option value="">All Type</option>
+                    <option value="arrival">Arrival</option>
+                    <option value="departure">departure</option>
                 </select>
+                <button name="filter_button" type="submit" class="btn btn-primary mx-4">Filter</button>
+                </form>
                 <table style="margin-top: 15px;">
                     <tr>
                         <th>Flight_No</th>

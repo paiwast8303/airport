@@ -2,7 +2,7 @@
 include 'include/config.php';
 
 $flight_d_q = mysqli_query($dbs ,"
-SELECT `f`.`flight_no` ,`a`.`name`,`p`.`name` , `f`.`departure_time`,`g`.`gate` ,`f`.`statuss`
+SELECT `f`.`flight_no` ,`a`.`name` AS 'airline',`p`.`name` AS 'destination' , `f`.`departure_time`,`g`.`gate` ,`f`.`statuss`
 FROM `flight`as `f` 
 JOIN `airline` as `a` on  	`f`.`airline_id` = `a`.`id`
 JOIN `airport` as `p` on `f`.`destination_id` = `p`.`id`
@@ -11,7 +11,7 @@ WHERE `f`.`type` = 'departure'
 ");
 
 $flight_a_q = mysqli_query($dbs ,"
-SELECT `f`.`flight_no` ,`a`.`name`,`p`.`name` , `f`.`departure_time`,`g`.`gate` ,`f`.`statuss`
+SELECT `f`.`flight_no` ,`a`.`name` AS 'airline',`p`.`name` AS 'origin' , `f`.`arrival_time`,`g`.`gate` ,`f`.`statuss`
 FROM `flight`as `f` 
 JOIN `airline` as `a` on  	`f`.`airline_id` = `a`.`id`
 JOIN `airport` as `p` on `f`.`origin_id` = `p`.`id`
@@ -36,10 +36,10 @@ WHERE `f`.`type` = 'arrival'
         <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
             <div style="color: #0f172a; font-size: 1.5rem; font-weight: bold;">✈️ Airport Info</div>
             <div>
-                <a href="index.html">Home</a>
-                <a href="flights.html">Flights</a>
-                <a href="gates.html">Gates</a>
-                <a href="help.html">Help</a>
+                <a href="index.php">Home</a>
+                <a href="flights.php">Flights</a>
+                <a href="gates.php">Gates</a>
+                <a href="help.php">Help</a>
             </div>
         </div>
     </nav>
@@ -48,7 +48,7 @@ WHERE `f`.`type` = 'arrival'
         <div class="container">
             <h1>Welcome to Our Airport</h1>
             <p>Real-time flight information and airport services</p>
-            <a href="flights.html" class="hero-btn">View Flights</a>
+            <a href="flights.php" class="hero-btn">View Flights</a>
         </div>
     </div>
 
@@ -100,9 +100,9 @@ WHERE `f`.`type` = 'arrival'
                 <div class="flight">
                     <div>
                         <div><?php echo $flight_d_row['flight_no']; ?></div>
-                        <div><?php echo $flight_d_row['name']; ?></div>
+                        <div><?php echo $flight_d_row['airline']; ?></div>
                     </div>
-                    <div><?php echo $flight_d_row['name']; ?></div>
+                    <div><?php echo $flight_d_row['destination']; ?></div>
                     <div><?php echo $flight_d_row['departure_time']; ?></div>
                     <div><?php echo $flight_d_row['gate']; ?></div>
                     <div style="background: rgba(22,163,74,0.2); color: #16a34a; border: 1px solid rgba(22,163,74,0.3); padding: 6px 16px; border-radius: 20px; font-weight: 600; text-align: center;">On Time</div>
@@ -117,10 +117,10 @@ WHERE `f`.`type` = 'arrival'
                 <div class="flight">
                     <div>
                         <div><?php echo $flight_a_row['flight_no']; ?></div>
-                        <div><?php echo $flight_a_row['name']; ?></div>
+                        <div><?php echo $flight_a_row['airline']; ?></div>
                     </div>
-                    <div>From <?php echo $flight_a_row['name']; ?></div>
-                    <div><?php echo $flight_a_row['departure_time']; ?></div>
+                    <div>From <?php echo $flight_a_row['origin']; ?></div>
+                    <div><?php echo $flight_a_row['arrival_time']; ?></div>
                     <div><?php echo $flight_a_row['gate']; ?></div>
                     <div style="background: rgba(22,163,74,0.2); color: #16a34a; border: 1px solid rgba(22,163,74,0.3); padding: 6px 16px; border-radius: 20px; font-weight: 600; text-align: center;">Landed</div>
                 </div>

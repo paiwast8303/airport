@@ -34,6 +34,13 @@ if(isset($_POST['filter_button'])){
         JOIN `terminal` as `t` on   `t`.`id` = `g`.`terminal_id`" . $where_clause);
     }
 }
+
+$gateavailable = mysqli_query($db, "SELECT * FROM `gate` WHERE `status` = 'Available'");
+$total_available = mysqli_num_rows($gateavailable);
+
+$gateclosed = mysqli_query($db, "SELECT * FROM `gate` WHERE `status` = 'Closed'");
+$total_closed = mysqli_num_rows($gateclosed);
+
 ?>
 <!DOCTYPE html>
 <html >
@@ -83,7 +90,7 @@ if(isset($_POST['filter_button'])){
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      <button form="addGateForm" type="submit" class="btn btn-primary">ADD</button>
+      <button name="addgatesform" form="addGateForm" type="submit" class="btn btn-primary">ADD</button>
       </div>
     </div>
   </div>
@@ -125,16 +132,12 @@ if(isset($_POST['filter_button'])){
                             <h4>Total Gates</h4>
                         </div>
                         <div class="st-b">
-                            <h2>0</h2>
+                            <h2><?php echo $total_available; ?></h2>
                             <h4>Total Available</h4>
                         </div>
                         <div class="st-b">
-                            <h2>0</h2>
-                            <h4>Occupied</h4>
-                        </div>
-                        <div class="st-b">
-                            <h2>0</h2>
-                            <h4>Maintenance</h4>
+                            <h2><?php echo $total_closed; ?></h2>
+                            <h4>Close</h4>
                         </div>
                     </div>
                     <div>

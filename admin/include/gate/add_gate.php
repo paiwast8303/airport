@@ -1,7 +1,7 @@
 <?php 
 include '../config.php';
 
-$gate_name = clear($_POST['gate_namess']);
+$gate_name = clear($_POST['gate_name']);
 $terminal = clear($_POST['Terminal']);
 $status = clear($_POST['Status']);
 
