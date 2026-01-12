@@ -215,6 +215,9 @@ WHERE `f`.`type` = 'arrival'
             `;
         }
 
+
+
+        
         function switchTab(tab) {
             document.querySelectorAll('#flightTabs button').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');

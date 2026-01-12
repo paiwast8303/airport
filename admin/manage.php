@@ -9,16 +9,31 @@ $roles = $_SESSION['role'];
 
 $qgate = mysqli_query($db, "SELECT * FROM `gate`");
 
-$fl_query_filter = "SELECT f.flight_no, f.type, f.statuss, f.dates, f.boarding_time,f.departure_time,f.arrival_time,
-           a.name AS airline_name,
-           g.gate AS gate_name,
-           o.name AS origin_name,
-           d.name AS destination_name
-    FROM flight f
-    JOIN airline a ON f.airline_id = a.id
-    JOIN gate g ON f.gate_id = g.id
-    JOIN airport o ON f.origin_id = o.id
-    JOIN airport d ON f.destination_id = d.id";
+$fl_query_filter = "
+SELECT 
+    f.id,
+    f.flight_no,
+    f.airline_id,
+    f.gate_id,
+    f.origin_id,
+    f.destination_id,
+    f.type,
+    f.statuss,
+    f.dates,
+    f.boarding_time,
+    f.departure_time,
+    f.arrival_time,
+    a.name AS airline_name,
+    g.gate AS gate_name,
+    o.name AS origin_name,
+    d.name AS destination_name
+FROM flight f
+JOIN airline a ON f.airline_id = a.id
+JOIN gate g ON f.gate_id = g.id
+JOIN airport o ON f.origin_id = o.id
+JOIN airport d ON f.destination_id = d.id
+";
+
 
 if (isset($_POST['filter_button'])) {
     $type_filter = $_POST['type_filter'];
@@ -210,8 +225,11 @@ $airlines = mysqli_query($db, "SELECT * FROM `airline`");
       </div>
       <div class="modal-body">
         <form id="manageupdate<?php echo $row_1['id'];?>" name="update_flight-id-<?php echo $row_1['id'];?>" action="include/flight_manage.php" method="post">
-  <div class="container-fluid">
+        <input type="hidden" name="id" value="<?php echo $row_1['id']; ?>">
+
+        <div class="container-fluid">
     <div class="row g-3">
+      
       <div class="col-md-6">
         <label for="flightNo" class="form-label">Flight No:</label>
         <input name="flight_no" type="text" class="form-control" id="flightNo" placeholder="e.g., AA123" value="<?php echo $row_1['flight_no']; ?>">
@@ -332,6 +350,5 @@ $airlines = mysqli_query($db, "SELECT * FROM `airline`");
         
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <script src="role.js"></script>
 </body>
 </html>
