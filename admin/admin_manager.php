@@ -112,7 +112,6 @@ if(isset($_GET['filter_aut'])){
               <option value="admin">admin</option>
               <option value="Gate Manger">Gate Manger</option>
               <option value="Flight Manger">Flight Manger</option>
-              <option value="Staff">Staff</option>
             </select>
         </div>
         <div class="col-md-6">

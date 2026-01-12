@@ -128,7 +128,7 @@ $flight_info = mysqli_fetch_assoc($flight_detils_q);
 </div>
 
 <div class="text-center mb-5">
-<a href="flights.html" class="btn btn-primary btn-lg">← Back to Flights</a>
+<a href="flights.php" class="btn btn-primary btn-lg">← Back to Flights</a>
 </div>
 
 </div>

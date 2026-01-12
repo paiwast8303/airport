@@ -15,12 +15,13 @@ if (isset($_POST['submit'])) {
         session_start();
         
         $_SESSION['name'] = $row['fname']; 
+        $_SESSION['names'] = $row['lname'];
         $_SESSION['role'] = $row['role'];
         $_SESSION['id'] = $row['id'];
             
     $admin_name = $_SESSION['name'];
     $admin_id = $_SESSION['id'];
-    $detils = "$admin_name logged in";
+    $detils = "$admin_name log in";
     $aql = mysqli_query($db, "INSERT INTO `audit_log` ( `admin_id`, `action_type`, `detail`) VALUES ( '$admin_id', 'login', '$detils');");
 
     if($aql){
@@ -41,7 +42,6 @@ if (isset($_POST['submit'])) {
       echo "<script>alert('User not found');</script>";
     }
 }
-
 
 ?>
 <!DOCTYPE html>
