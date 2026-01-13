@@ -288,7 +288,7 @@ if(isset($_GET['filter_aut'])){
                          <td><?php echo $row['created_at']; ?></td>
                          <?php if($roles == 'superadmin'): ?>
                       <td>
-                    <a href="admin_manager.php?e_id=<?php echo $row['id'];?>" type="button" class="btn btn-warning add_f" data-bs-toggle="modal" data-bs-target="#editeadmins<?php echo $row['id'];?>">Edite</a>
+                    <a href="admin_manager.php?e_id=<?php echo $row['id'];?>" type="button" class="btn btn-warning add_f" data-bs-toggle="modal" data-bs-target="#editeadmins<?php echo $row['id'];?>">Edit</a>
                          </td>
                             <?php  endif; ?>
                            </tr>

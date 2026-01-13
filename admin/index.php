@@ -2,8 +2,8 @@
 include 'include/config.php';
 
 if (isset($_POST['submit'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $email = clear($_POST['email']);
+    $password = clear($_POST['password']);
     $password_hash = password_hash($password, PASSWORD_BCRYPT);
     
      $query = "SELECT * FROM `admin` WHERE `Email` = '$email' ";
@@ -70,6 +70,8 @@ if (isset($_POST['submit'])) {
         <div>
             <h2>Airport Login</h2>
         </div>
+
+        <!-- form log in -->
         <form action="index.php" method="POST">
             <label>Username</label>
             <input name="email" type="email" placeholder="Enter your username or ID" required />

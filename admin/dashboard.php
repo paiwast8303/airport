@@ -2,7 +2,7 @@
 include 'include/config.php';
 
 session_start();
-if($_SESSION['role']==''){
+if($_SESSION['role']=='' || $_SESSION['role']==null){
     header("Location: index.php");
     exit();
 }
@@ -126,7 +126,7 @@ $gate_assignments = mysqli_query($db, "
                         
                     </table>
                 </div>
-                
+                <?php if ($roles == 'superadmin' || $roles == 'admin'): ?>
                 <div class="card">
                     <h3> Audit Log</h3>
                     <table>
@@ -149,6 +149,7 @@ $gate_assignments = mysqli_query($db, "
                        
                     </table>
                 </div>
+                <?php endif; ?>
                 <?php if ($roles != 'Flight Manger'): ?>
                 <div class="card">
     <h3>Gate Status Overview</h3>
